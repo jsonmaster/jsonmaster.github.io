@@ -59,7 +59,6 @@
                          "description"
                          ],
     "booleanGetter": "",
-    "briefDescription": "Defines how your JSON objects can be mapped to Swift structures using the built-in NSJSONSerialization class",
     "utilityMethods": [
                        ],
     "dataTypes": {
@@ -71,6 +70,7 @@
         "longType": "Double",
         "intType": "Int"
     },
+
     "wordsToRemoveToGetArrayElementsType": [
                                             "[",
                                             "]"
@@ -83,9 +83,7 @@
                      "bodyEnd": "\t}\n",
                      "fetchBasicTypePropertyFromMap": "\t\tcase <!VarName!> = \"<!JsonKeyName!>\"\n",
                      "signature": "\tenum CodingKeys: String, CodingKey ",
-                     "fetchArrayOfCustomTypePropertyFromMap": "\t\tcase <!VarName!> = \"<!JsonKeyName!>\"\n",
-                     "comment": "",
-                     "fetchCustomTypePropertyFromMap": "\t\tcase <!VarName!>\n"
+                     "comment": ""
                      },
                      {
                      "fetchBasicTypeWithSpecialNeedsPropertyFromMap": "",
@@ -93,13 +91,12 @@
                      "bodyEnd": "\t}\n",
                      "fetchBasicTypePropertyFromMap": "\t\t<!VarName!> = try values.decode(<!VarType!>.self, forKey: .<!VarName!>)\n",
                      "signature": "\tinit(from decoder: Decoder) throws ",
-                     "fetchArrayOfCustomTypePropertyFromMap": "\t\t<!VarName!> = try values.decodeIfPresent(<!VarType!>.self, forKey: .<!VarName!>)\n",
-                     "comment": "",
-                     "fetchCustomTypePropertyFromMap": "\t\t<!VarName!> = try <!VarType!>(from: decoder)\n"
+                     "comment": ""
                      }
                 ],
+
     "modelDefinition": "\nstruct <!ModelName!>: Codable ",
-    "genericType": "AnyObject",
+    "genericType": "Any",
     "getter": "",
     "setter": "",
     "fileExtension": "swift",
