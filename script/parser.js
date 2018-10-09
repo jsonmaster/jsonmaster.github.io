@@ -28,14 +28,17 @@ FileBuilder.prototype = {
 		if (json) {
 			let files = this.getFiles("Sample", json, this.language);
 
-			let result = files.reduce(function(prefix, value) {
-				return prefix + "\n\n" + value;
+
+			var result = "";
+
+			files.forEach(function(file) {
+				result += file.toString();
 			});
 
 			return result;
 		}
 
-		return "";		
+		return "";
 	}
 }
 
@@ -50,6 +53,7 @@ FileBuilder.prototype.getFiles = function(fileName, object, language) {
 	var keys = Object.keys(obj);
 	var properties = new Array();
 	
+	var _this = this;
 	keys.forEach(function(key) {
 		var value = obj[key];
 		var property = getProperty(key, value, language);
@@ -60,10 +64,10 @@ FileBuilder.prototype.getFiles = function(fileName, object, language) {
 
 		if (prevIndex < 0) {
 			if (property.isCustomClass) {
-				let file = getFiles(property.propertyType, value, language);
+				let file = _this.getFiles(property.propertyType, value, language);
 				files.push(file);
 			} else if (property.isArray && property.elementTypeIsCustom) {
-				let file = getFiles(property.elementType, value, language);
+				let file = _this.getFiles(property.elementType, value, language);
 				files.push(file);
 			}
 
