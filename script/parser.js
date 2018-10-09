@@ -12,30 +12,34 @@ let jsonKeyName = "<!JsonKeyName!>"
 let constKeyName = "<!ConstKeyName!>"
 let additionalCustomTypeProperty = "<!AdditionalForCustomTypeProperty!>"
 
-function getClasses(string, completion) {
-	let json = JSON.parse(string);
 
-	if (json) {
+// FileBuilder
+function FileBuilder(language) {
+	this.language = language
+	this.isInitializers = true
+}
 
-		$.getJSON("./languages/Swift-Struct-Codable.json", function(language) {
-			let files = getFiles("Sample", json, language);
-			console.log(files);
+FileBuilder.prototype = {
+	constructor: FileBuilder,
+	classes: function(string) {
 
-			files.forEach(function(file) {
-				console.log(file.toString());
-				console.log("\n\n\n");
-			});
+		let json = JSON.parse(string);
+
+		if (json) {
+			let files = this.getFiles("Sample", json, this.language);
 
 			let result = files.reduce(function(prefix, value) {
 				return prefix + "\n\n" + value;
 			});
 
-			completion(result);
-		});
+			return result;
+		}
+
+		return "";		
 	}
 }
 
-function getFiles(fileName, object, language) {
+FileBuilder.prototype.getFiles = function(fileName, object, language) {
 	var obj = object;
 	var files = new Array();
 
@@ -68,6 +72,8 @@ function getFiles(fileName, object, language) {
 	});
 
 	var file = new FileRepresenter(fileName, properties, language);
+	file.isInitializers = this.isInitializers;
+
 	files.splice(0, 0, file);
 	return files;
 }
@@ -83,7 +89,7 @@ function getProperty(key, value, language) {
 
 	if (value instanceof Array) {
 		if (value[0] && (value[0] instanceof Object)) {
-			var leafType = getTypeNameFromKey(key);
+			var leafType = getTypeNameFromKey(key, language);
 			valueType = "["+ leafType +"]"; // TODO: change from language
 
 			property.propertyType = valueType;
@@ -99,7 +105,7 @@ function getProperty(key, value, language) {
 			property.elementTypeIsCustom = false;
 		}
 	} else if (value instanceof Object) {
-		valueType = getTypeNameFromKey(key);
+		valueType = getTypeNameFromKey(key, language);
 
 		property.propertyType = valueType;
 		property.isArray = false;
@@ -111,19 +117,19 @@ function getProperty(key, value, language) {
 	return property;
 }
 
-function getTypeNameFromKey(value) {
-	return getLanguageName(value).capitalize();
+function getTypeNameFromKey(value, language) {
+	return getLanguageName(value, language).capitalize();
 }
 
 function getLanguageName(value, language) {
 	var propertyName = cleanupName(value);
 	propertyName = underscoreToCamelcase(propertyName);
 
-	// if (language.reservedKeywords) {
-	// 	if (language.reservedKeywords.indexOf(propertyName) > -1) {
-	// 		propertyName = "`"+propertyName+"`";
-	// 	}
-	// }
+	if (language.reservedKeywords) {
+		if (language.reservedKeywords.indexOf(propertyName) > -1) {
+			propertyName = "`"+propertyName+"`";
+		}
+	}
 
 	return propertyName;
 }
@@ -215,23 +221,12 @@ Property.prototype = {
 	}
 }
 
-// FileBuilder
-function FileBuilder(language) {
-	this.language = language
-}
-
-FileBuilder.prototype = {
-	constructor: FileBuilder,
-	classes: function() {
-		
-	}
-}
-
 // FileRepresenter
 function FileRepresenter(className, properties, language) {
 	this.language = language
 	this.className = className
 	this.properties = properties
+	this.isInitializers = false
 }
 
 FileRepresenter.prototype = {
@@ -265,9 +260,14 @@ FileRepresenter.prototype = {
 	addInitializers: function() {
 		var content = "";
 
+		if (!this.isInitializers) {
+			return content;
+		}
+
 		var properties = this.properties;
 		var className = this.className;
 		this.language.constructors.forEach(function(construct) {
+			content += "\n";
 			if (construct.comment) {
 				content += construct.comment;
 			}
