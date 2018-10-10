@@ -7,4 +7,5 @@
   height: auto;
   min-height: 400px;
   font-size: small;
+  line-height: inherit;
 }

@@ -32,7 +32,9 @@ FileBuilder.prototype = {
 			var result = "";
 
 			files.forEach(function(file) {
-				result += file.toString();
+				let fileString = file.toString();
+				result += fileString;
+				result += "\n\n";
 			});
 
 			return result;
@@ -65,10 +67,10 @@ FileBuilder.prototype.getFiles = function(fileName, object, language) {
 		if (prevIndex < 0) {
 			if (property.isCustomClass) {
 				let file = _this.getFiles(property.propertyType, value, language);
-				files.push(file);
+				files = file;
 			} else if (property.isArray && property.elementTypeIsCustom) {
 				let file = _this.getFiles(property.elementType, value, language);
-				files.push(file);
+				files = file;
 			}
 
 			properties.push(property);
@@ -146,16 +148,16 @@ function getPropertyTypeName(value, language) {
 		if (value instanceof Array) {
 			languageType = getPropertyTypeForArray(value, language);
 		} else {
-			languageType = "Any"; //lang.dataTypes.generic;
+			languageType = language.dataTypes.generic;
 		}
 	} else if (type == "string") {
-		languageType = "String"; //lang.dataTypes.string;
+		languageType = language.dataTypes.string;
 	} else if (isInt(value)) {
-		languageType = "Int"; //lang.dataTypes.int;
+		languageType = language.dataTypes.int;
 	} else if (isFloat(value)) {
-		languageType = "Double"; //lang.dataTypes.float;
+		languageType = language.dataTypes.float;
 	} else if (type == "boolean") {
-		languageType = "Bool"; //lang.dataTypes.boolean;
+		languageType = language.dataTypes.boolean;
 	}
 
 	return languageType;
