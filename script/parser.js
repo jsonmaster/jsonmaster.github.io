@@ -11,6 +11,7 @@ let lowerCaseModelName = "<!LowerCaseModelName!>"
 let jsonKeyName = "<!JsonKeyName!>"
 let constKeyName = "<!ConstKeyName!>"
 let additionalCustomTypeProperty = "<!AdditionalForCustomTypeProperty!>"
+let modelIdentifier = "<!ModelIdentifier!>"
 
 
 // FileBuilder
@@ -84,6 +85,8 @@ FileBuilder.prototype.getFiles = function(fileName, object, language) {
 
 	var file = new FileRepresenter(fileName, properties, language);
 	file.isInitializers = this.isInitializers;
+	file.modelIdentifier = this.modelIdentifier;
+	file.methods = this.methods;
 
 	files.splice(0, 0, file);
 	return files;
@@ -101,7 +104,7 @@ function getProperty(key, value, language) {
 	if (value instanceof Array) {
 		if (value[0] && (value[0] instanceof Object)) {
 			var leafType = getTypeNameFromKey(key, language);
-			valueType = "["+ leafType +"]"; // TODO: change from language
+			valueType = language.dataTypes.arrayType.replaceAll(elementType, leafType);
 
 			property.propertyType = valueType;
 			property.isArray = true;
@@ -109,7 +112,7 @@ function getProperty(key, value, language) {
 			property.elementType = leafType;
 			property.elementTypeIsCustom = true;
 		} else {
-			property.propertyType = "["+ valueType +"]"; // TODO: change from language
+			property.propertyType = language.dataTypes.arrayType.replaceAll(elementType, valueType);
 			property.isArray = true;
 			property.isCustomClass = false;
 			property.elementType = getPropertyTypeForArray(value, language);
@@ -138,7 +141,7 @@ function getLanguageName(value, language) {
 
 	if (language.reservedKeywords) {
 		if (language.reservedKeywords.indexOf(propertyName) > -1) {
-			propertyName = "`"+propertyName+"`";
+			propertyName = propertyName+"Field";
 		}
 	}
 
@@ -268,6 +271,31 @@ FileRepresenter.prototype = {
 		return "";
 	},
 
+	getMethodContent: function(method) {
+		var content = "\n";
+
+		if (method.comment) {
+			content += method.comment;
+		}
+
+		content += method.signature;
+		content += method.bodyStart;
+
+		this.properties.forEach(function(property) {
+			var propertyString = method.fetchBasicTypePropertyFromMap;
+			propertyString = propertyString.replaceAll(varName, property.propertyName);
+			propertyString = propertyString.replaceAll(jsonKeyName, property.jsonKeyName);
+			propertyString = propertyString.replaceAll(varType, property.propertyType);
+
+			content += propertyString;
+		});
+
+		content += method.bodyEnd;
+		content = content.replaceAll(modelName, this.className);
+
+		return content;
+	},
+
 	addInitializers: function() {
 		var content = "";
 
@@ -275,35 +303,28 @@ FileRepresenter.prototype = {
 			return content;
 		}
 
-		var properties = this.properties;
-		var className = this.className;
-		this.language.constructors.forEach(function(construct) {
-			content += "\n";
-			if (construct.comment) {
-				content += construct.comment;
-			}
-
-			content += construct.signature;
-			content += construct.bodyStart;
-
-			properties.forEach(function(property) {
-				var propertyString = construct.fetchBasicTypePropertyFromMap;
-				propertyString = propertyString.replaceAll(varName, property.propertyName);
-				propertyString = propertyString.replaceAll(jsonKeyName, property.jsonKeyName);
-				propertyString = propertyString.replaceAll(varType, property.propertyType);
-
-				content += propertyString;
-			});
-
-			content += construct.bodyEnd;
-			content = content.replaceAll(modelName, className);
+		var _this = this;
+		this.language.methods.constructors.forEach(function(construct) {
+			content += _this.getMethodContent(construct);
 		});
 
 		return content;
 	},
 
 	addUtilitiesMethods: function() {
-		return "";
+		var content = "";
+
+		if (this.methods) {
+			var _this = this;
+			this.methods.forEach(function(key) {
+				var method = _this.language.methods.others[key];
+				if (method) {
+					content += _this.getMethodContent(method);
+				}
+			});
+		}
+
+		return content;
 	},
 
 	toString: function() {
@@ -313,7 +334,7 @@ FileRepresenter.prototype = {
 		content = content + this.addCopyright();
 		content = content + this.addImports();
 
-		let modelDefinition = this.language.modelDefinition.replaceAll(modelName, this.className);
+		let modelDefinition = this.language.modelDefinition.replaceAll(modelName, this.className).replaceAll(modelIdentifier, this.modelIdentifier);
 		content = content + modelDefinition;
 		content = content + this.language.modelStart;
 
