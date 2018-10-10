@@ -33,12 +33,12 @@ $(document).ready(function() {
     	inputChanged();
     });
 
+    $('#rootClassName').bind('input propertychange', function() {
+      inputChanged();
+    });
+
     inputTextArea.setSize(null, $("#input").innerHeight());
     outputTextArea.setSize(null, $("#input").innerHeight());
-
-   	$("#input").bind('input propertychange', function() {
-   		inputChanged();
-	});
 
    	$('#initializerCheckbox').change(function() {
         inputChanged();
@@ -57,6 +57,8 @@ $(document).ready(function() {
    	});
 
    	updateSelectedLanguage();
+
+    inputTextArea.setValue(examlpeJSON);
 });
 
 function inputChanged() {
@@ -64,6 +66,8 @@ function inputChanged() {
 		let input = inputTextArea.getValue();
 		let builder = new FileBuilder(language);
 		builder.isInitializers = $('#initializerCheckbox').is(':checked');
+    builder.rootClassName = $('#rootClassName').val();
+
 		let result = builder.classes(input);
 		outputTextArea.setValue(result);
 	});
@@ -73,3 +77,5 @@ function updateSelectedLanguage() {
 	$("#dropdownMenuButtonLanguage").text(selectedLanguage.name);
 	inputChanged();
 }
+
+let examlpeJSON = '{\n\t"test_int": 101,\n\t"test_bool": true,\n\t"test_string": "foo",\n\t"test_object": {\n\t\t"test_double": 1.12\n\t}\n}'
