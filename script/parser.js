@@ -26,7 +26,12 @@ FileBuilder.prototype = {
 		let json = JSON.parse(string);
 
 		if (json) {
-			let files = this.getFiles("Sample", json, this.language);
+			var className = this.rootClassName;
+			if (!className) {
+				className = "Sample";
+			}
+
+			let files = this.getFiles(className, json, this.language);
 
 
 			var result = "";

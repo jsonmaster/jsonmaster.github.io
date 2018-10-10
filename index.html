@@ -42,9 +42,6 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-2">
-					<div class="checkbox">
-  						<label><input type="checkbox" id="initializerCheckbox" checked> Initializers</label>
-					</div>
 					<div class="form-group">
 						<label for="dropdownMenuButtonLanguage">Language/Framework:</label>
 						<div class="dropdown">
@@ -55,16 +52,28 @@
 						  </div>
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="rootClassName">Root class name:</label>
+						<input type="text" placeholder="Enter root class name" class="form-control form-font" id="rootClassName"/>
+					</div>
+					<div class="input-group mb-3">
+					  <div class="input-group-prepend">
+					    <div class="input-group-text">
+					      <input type="checkbox" aria-label="Checkbox for following text input" id="initializerCheckbox" checked>
+					    </div>
+					  </div>
+					  <label for="initializerCheckbox" class="form-control" aria-label="Text input with checkbox">Initializers</label>
+					</div>
 				</div>
 				<div class="col-sm-5">
 					<div class="form-group">
-						<label for="input">Input:</label>
+						<label for="input">Input JSON:</label>
 						<textarea class="form-control form-font" rows="25" id="input"></textarea>
 					</div> 
 				</div>
 				<div class="col-sm-5">
 					<div class="form-group">
-						<label for="output">Output:</label>
+						<label for="output">Output Model:</label>
 						<textarea class="form-control form-font" rows="25" id="output" readonly></textarea>
 					</div>
 				</div>
