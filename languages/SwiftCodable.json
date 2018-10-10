@@ -1,6 +1,5 @@
 {
     "modelStart": "{\n",
-    "importForEachCustomType": "",
     "reservedKeywords": [
                          "abstract",
                          "assert",
@@ -58,9 +57,7 @@
                          "class",
                          "description"
                          ],
-    "booleanGetter": "",
-    "utilityMethods": [
-                       ],
+
     "dataTypes": {
         "arrayType": "[<!ElementType!>]",
         "generic": "Any",
@@ -73,49 +70,35 @@
         "int": "Int"
     },
 
-    "wordsToRemoveToGetArrayElementsType": [
-                                            "[",
-                                            "]"
-                                            ],
-
     "modelDefinition": "\n<!ModelIdentifier!> <!ModelName!>: Codable ",
     "getter": "",
     "setter": "",
     "fileExtension": "swift",
-    "basicTypesWithSpecialFetchingNeeds": [
-    ],
-    "displayLangName": "Swift - Struct - Codable",
     "instanceVarDefinition": "\tlet <!VarName!>: <!VarType!>?\n",
-    "supportsFirstLineStatement": "false",
     "modelEnd": "\n}",
     "staticImports": "import Foundation",
-    "langName": "Swift",
     "methods": {
         "constructorName": "Initializer",
         "constructors": [{
-            "fetchBasicTypeWithSpecialNeedsPropertyFromMap": "",
-            "bodyStart": "{\n",
-            "body": "",
-            "bodyEnd": "\t}\n",
-            "fetchBasicTypePropertyFromMap": "\t\tcase <!VarName!> = \"<!JsonKeyName!>\"\n",
             "signature": "\tenum CodingKeys: String, CodingKey ",
+            "bodyStart": "{\n",
+            "bodyEnd": "\t}\n",
+            "codeForEachProperty": "\t\tcase <!VarName!> = \"<!JsonKeyName!>\"\n",
             "comment": ""
-        },{
-            "fetchBasicTypeWithSpecialNeedsPropertyFromMap": "",
+        },{            
+            "signature": "\tinit(from decoder: Decoder) throws ",
             "bodyStart": "{\n\t\tlet values = try decoder.container(keyedBy: CodingKeys.self)\n",                     
             "bodyEnd": "\t}\n",
-            "fetchBasicTypePropertyFromMap": "\t\t<!VarName!> = try values.decodeIfPresent(<!VarType!>.self, forKey: .<!VarName!>)\n",
-            "signature": "\tinit(from decoder: Decoder) throws ",
+            "codeForEachProperty": "\t\t<!VarName!> = try values.decodeIfPresent(<!VarType!>.self, forKey: .<!VarName!>)\n",
             "comment": ""
         }],
         "others": {
             "encoder": {
                 "name": "Encoding",
-                "fetchBasicTypeWithSpecialNeedsPropertyFromMap": "",
+                "signature": "\tfunc encode(to encoder: Encoder) throws ",
                 "bodyStart": "{\n\t\tvar container = encoder.container(keyedBy: CodingKeys.self)\n",                     
                 "bodyEnd": "\t}\n",
-                "fetchBasicTypePropertyFromMap": "\t\ttry container.encodeIfPresent(<!VarName!>, forKey: .<!VarName!>)\n",
-                "signature": "\tfunc encode(to encoder: Encoder) throws ",
+                "codeForEachProperty": "\t\ttry container.encodeIfPresent(<!VarName!>, forKey: .<!VarName!>)\n",
                 "comment": "",
                 "checked": "checked"
             }

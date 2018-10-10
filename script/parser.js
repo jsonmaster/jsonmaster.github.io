@@ -250,7 +250,7 @@ FileRepresenter.prototype = {
 	},
 
 	addCopyright: function() {
-		return "";
+		return `//\n//  ${this.className}.${this.language.fileExtension}\n//\n//  Generated using https://jsonmaster.github.io\n//  Created on ${new Date().dateString()}\n//\n`;
 	},
 
 	addImports: function() {
@@ -282,7 +282,7 @@ FileRepresenter.prototype = {
 		content += method.bodyStart;
 
 		this.properties.forEach(function(property) {
-			var propertyString = method.fetchBasicTypePropertyFromMap;
+			var propertyString = method.codeForEachProperty;
 			propertyString = propertyString.replaceAll(varName, property.propertyName);
 			propertyString = propertyString.replaceAll(jsonKeyName, property.jsonKeyName);
 			propertyString = propertyString.replaceAll(varType, property.propertyType);
@@ -347,4 +347,21 @@ FileRepresenter.prototype = {
 
 		return content;
 	}
+}
+
+
+
+Date.prototype.dateString = function() {
+
+	var monthNames = [
+    	"January", "February", "March",
+    	"April", "May", "June", "July",
+    	"August", "September", "October",
+   	 	"November", "December"
+  	];
+
+  	var mm = this.getMonth();
+  	var dd = this.getDate();
+
+  	return monthNames[mm] + " " + (dd>9 ? '' : '0') + dd + ", " + this.getFullYear();
 }
