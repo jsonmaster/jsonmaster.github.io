@@ -62,13 +62,14 @@
     "utilityMethods": [
                        ],
     "dataTypes": {
-        "stringType": "String",
-        "boolType": "Bool",
-        "floatType": "Float",
+        "generic": "Any",
+        "string": "String",
+        "boolean": "Bool",
+        "float": "Double",
         "doubleType": "Double",
         "characterType": "Character",
         "longType": "Double",
-        "intType": "Int"
+        "int": "Int"
     },
 
     "wordsToRemoveToGetArrayElementsType": [
@@ -96,7 +97,6 @@
                 ],
 
     "modelDefinition": "\nstruct <!ModelName!>: Codable ",
-    "genericType": "Any",
     "getter": "",
     "setter": "",
     "fileExtension": "swift",
