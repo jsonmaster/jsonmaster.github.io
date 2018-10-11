@@ -14,19 +14,6 @@ let languages = {
           value: "Class",
           checked: ""
         }]
-      },
-      swiftyjson: {  
-        name: "SwiftyJSON",
-        file: "SwiftCodable.json",
-        identifiers: [{
-          key: "struct",
-          value: "Struct",
-          checked: "checked"
-        },{
-          key: "class",
-          value: "Class",
-          checked: ""
-        }]
       }
     }
   },
