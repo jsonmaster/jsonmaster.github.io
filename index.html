@@ -29,18 +29,34 @@
 
 		<!-- CodeMirroe -->
 		<link rel="stylesheet" href="codemirror/lib/codemirror.css">
+		<link rel="stylesheet" href="codemirror/theme/ambiance.css">
 		<script src="codemirror/lib/codemirror.js"></script>
 		<script src="codemirror/mode/javascript/javascript.js"></script>
 		<script src="codemirror/mode/swift/swift.js"></script>
 		<script src="codemirror/mode/clike/clike.js"></script>
+
+		<!-- JSZip -->
+		<script src="jszip/FileSaver.js"></script>
+		<script src="jszip/jszip.min.js"></script>
 	</head>
 	<body>
 		<!-- As a link -->
-		<nav class="navbar navbar-dark bg-dark">
-		  <a class="navbar-brand" href="#">JSON Master</a>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		  <a class="navbar-brand mb-0 h1" href="#">JSON Master</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		    </ul>
+		    <ul class="navbar-nav my-2 my-lg-0">
+		      <li class="nav-item">
+		        <a class="nav-link" href="https://github.com/jsonmaster/jsonmaster.github.io/issues" target="_blank">Issues</a>
+		      </li>
+		    </form>
+		  </div>
 		</nav>
-		<br/>
-		<div class="container-fluid">
+		<div class="container-fluid bg-light pt-3">
 			<div class="row">
 				<div class="col-sm-2">
 					<div class="form-group">
@@ -73,7 +89,7 @@
 					</div>
 				</div>
 				<div class="col-sm-5">
-					<div class="form-group">
+					<div class="form-group bg-secondary text-light border border-secondary rounded p-2">
 						<label for="input">Input JSON:</label>
 						<textarea class="form-control form-font" rows="25" id="input"></textarea>
 					</div> 
