@@ -306,6 +306,10 @@ FileRepresenter.prototype = {
 
 			var capitalizedVarTypeString = property.propertyType.capitalize();
 
+			if (property.isArray) {
+				capitalizedVarTypeString = property.elementType;
+			}
+
 			if (language.typesWithCustomFetchMethod) {
 				let index = language.typesWithCustomFetchMethod.indexOf(capitalizedVarTypeString);
 				if (index >= 0) {

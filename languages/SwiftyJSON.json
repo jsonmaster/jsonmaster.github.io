@@ -70,39 +70,43 @@
         "int": "Int"
     },
 
-    "modelDefinition": "\n<!ModelIdentifier!> <!ModelName!>: Codable ",
+    "typesWithCustomFetchMethod": [
+        "String",
+        "Bool",
+        "Double",
+        "Int",
+        "Any"
+    ],
+
+    "customFetchTypeReplacement": [
+        ".stringValue",
+        ".boolValue",
+        ".doubleValue",
+        ".intValue",
+        ""
+    ],
+
+    "modelDefinition": "\n<!ModelIdentifier!> <!ModelName!> ",
     "getter": "",
     "setter": "",
     "fileExtension": "swift",
     "instanceVarDefinition": "\tlet <!VarName!>: <!VarType!>?\n",
     "modelEnd": "\n}",
-    "staticImports": "import Foundation",
+    "staticImports": "import Foundation\nimport SwiftyJSON",
     "methods": {
         "constructorName": "Initializer",
         "constructorChecked": "checked",
         "constructors": [{
-            "signature": "\tenum CodingKeys: String, CodingKey ",
+            "signature": "\tinit(_ json: JSON) ",
             "bodyStart": "{\n",
             "bodyEnd": "\t}\n",
-            "codeForEachProperty": "\t\tcase <!VarName!> = \"<!JsonKeyName!>\"\n",
-            "comment": ""
-        },{            
-            "signature": "\tinit(from decoder: Decoder) throws ",
-            "bodyStart": "{\n\t\tlet values = try decoder.container(keyedBy: CodingKeys.self)\n",                     
-            "bodyEnd": "\t}\n",
-            "codeForEachProperty": "\t\t<!VarName!> = try values.decodeIfPresent(<!VarType!>.self, forKey: .<!VarName!>)\n",
+            "codeForEachProperty": "\t\t<!VarName!> = json[\"<!JsonKeyName!>\"]<!CapitalizedVarType!>\n",
+            "codeForEachArrayProperty": "\t\t<!VarName!> = json[\"<!JsonKeyName!>\"].arrayValue.map { $0<!CapitalizedVarType!> }\n",
+            "codeForEachCustomProperty": "\t\t<!VarName!> = <!VarType!>(json[\"<!JsonKeyName!>\"])\n",
+            "codeForEachCustomArrayProperty": "\t\t<!VarName!> = json[\"<!JsonKeyName!>\"].arrayValue.map { <!ElementType!>($0) }\n",
             "comment": ""
         }],
         "others": {
-            "encoder": {
-                "name": "Encoding",
-                "signature": "\tfunc encode(to encoder: Encoder) throws ",
-                "bodyStart": "{\n\t\tvar container = encoder.container(keyedBy: CodingKeys.self)\n",                     
-                "bodyEnd": "\t}\n",
-                "codeForEachProperty": "\t\ttry container.encodeIfPresent(<!VarName!>, forKey: .<!VarName!>)\n",
-                "comment": "",
-                "checked": "checked"
-            }
         }
     }
 }
