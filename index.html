@@ -43,26 +43,32 @@
 			<div class="row">
 				<div class="col-sm-2">
 					<div class="form-group">
-						<label for="dropdownMenuButtonLanguage">Language/Framework:</label>
+						<label for="dropdownMenuButtonLanguage">Language:</label>
 						<div class="dropdown">
 						  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    Dropdown button
 						  </button>
-						  <div class="dropdown-menu" id="dropdownMenuLanguage" aria-labelledby="dropdownMenuButton">
+						  <div class="dropdown-menu" id="dropdownMenuLanguage" aria-labelledby="dropdownMenuButtonLanguage">
 						  </div>
 						</div>
+					</div>
+					<div class="form-group">
+						<label for="dropdownMenuButtonFramework">Framework:</label>
+						<div class="dropdown">
+						  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonFramework" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    Dropdown button
+						  </button>
+						  <div class="dropdown-menu" id="dropdownMenuFramework" aria-labelledby="dropdownMenuButtonFramework">
+						  </div>
+						</div>
+					</div>
+					<div class="form-group" id="modelIdentifiers">
 					</div>
 					<div class="form-group">
 						<label for="rootClassName">Root class name:</label>
 						<input type="text" placeholder="Enter root class name" class="form-control form-font" id="rootClassName"/>
 					</div>
-					<div class="input-group mb-3">
-					  <div class="input-group-prepend">
-					    <div class="input-group-text">
-					      <input type="checkbox" aria-label="Checkbox for following text input" id="initializerCheckbox" checked>
-					    </div>
-					  </div>
-					  <label for="initializerCheckbox" class="form-control" aria-label="Text input with checkbox">Initializers</label>
+					<div class="form-group" id="methodsCheckboxes">
 					</div>
 				</div>
 				<div class="col-sm-5">

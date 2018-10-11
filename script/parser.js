@@ -11,6 +11,7 @@ let lowerCaseModelName = "<!LowerCaseModelName!>"
 let jsonKeyName = "<!JsonKeyName!>"
 let constKeyName = "<!ConstKeyName!>"
 let additionalCustomTypeProperty = "<!AdditionalForCustomTypeProperty!>"
+let modelIdentifier = "<!ModelIdentifier!>"
 
 
 // FileBuilder
@@ -84,6 +85,8 @@ FileBuilder.prototype.getFiles = function(fileName, object, language) {
 
 	var file = new FileRepresenter(fileName, properties, language);
 	file.isInitializers = this.isInitializers;
+	file.modelIdentifier = this.modelIdentifier;
+	file.methods = this.methods;
 
 	files.splice(0, 0, file);
 	return files;
@@ -101,7 +104,7 @@ function getProperty(key, value, language) {
 	if (value instanceof Array) {
 		if (value[0] && (value[0] instanceof Object)) {
 			var leafType = getTypeNameFromKey(key, language);
-			valueType = "["+ leafType +"]"; // TODO: change from language
+			valueType = language.dataTypes.arrayType.replaceAll(elementType, leafType);
 
 			property.propertyType = valueType;
 			property.isArray = true;
@@ -109,7 +112,7 @@ function getProperty(key, value, language) {
 			property.elementType = leafType;
 			property.elementTypeIsCustom = true;
 		} else {
-			property.propertyType = "["+ valueType +"]"; // TODO: change from language
+			property.propertyType = language.dataTypes.arrayType.replaceAll(elementType, valueType);
 			property.isArray = true;
 			property.isCustomClass = false;
 			property.elementType = getPropertyTypeForArray(value, language);
@@ -138,7 +141,7 @@ function getLanguageName(value, language) {
 
 	if (language.reservedKeywords) {
 		if (language.reservedKeywords.indexOf(propertyName) > -1) {
-			propertyName = "`"+propertyName+"`";
+			propertyName = propertyName+"Field";
 		}
 	}
 
@@ -170,7 +173,7 @@ function getPropertyTypeName(value, language) {
 
 function getPropertyTypeForArray(value, language) {
 	if (value.length == 0) {
-		return "Any"; //lang.dataTypes.generic;
+		return language.dataTypes.generic;
 	} else {
 		return getPropertyTypeName(value[0], language);
 	}
@@ -247,7 +250,7 @@ FileRepresenter.prototype = {
 	},
 
 	addCopyright: function() {
-		return "";
+		return `//\n//  ${this.className}.${this.language.fileExtension}\n//\n//  Generated using https://jsonmaster.github.io\n//  Created on ${new Date().dateString()}\n//\n`;
 	},
 
 	addImports: function() {
@@ -268,6 +271,78 @@ FileRepresenter.prototype = {
 		return "";
 	},
 
+	getMethodContentWithDependency: function(method) {
+		var content = "";
+
+		content += method.bodyStartWithDependency;
+		content += method.bodyEndWithDependency;
+		content = content.replaceAll(modelName, this.className);
+
+		return content;
+	},
+
+	getMethodContent: function(method) {
+		var content = "\n";
+
+		if (method.comment) {
+			content += method.comment;
+		}
+
+		content += method.signature;
+
+
+		if (method.dependency) {
+			if (this.methods.indexOf(method.dependency) > -1) {
+				return content += this.getMethodContentWithDependency(method);
+			}
+		}
+
+		content += method.bodyStart;
+
+		var language = this.language;
+
+		this.properties.forEach(function(property) {
+			
+
+			var capitalizedVarTypeString = property.propertyType.capitalize();
+
+			if (language.typesWithCustomFetchMethod) {
+				let index = language.typesWithCustomFetchMethod.indexOf(capitalizedVarTypeString);
+				if (index >= 0) {
+					capitalizedVarTypeString = language.customFetchTypeReplacement[index];
+				}
+			}
+
+			var propertyString = method.codeForEachProperty;
+
+			if (property.isCustomClass) {
+				if (method.codeForEachCustomProperty) {
+					propertyString = method.codeForEachCustomProperty;
+				}
+			} else if (property.isArray) {
+				if (property.elementTypeIsCustom && method.codeForEachCustomArrayProperty) {
+					propertyString = method.codeForEachCustomArrayProperty;
+				} else if (method.codeForEachArrayProperty) {
+					propertyString = method.codeForEachArrayProperty;
+				}
+			}
+
+			propertyString = propertyString.replaceAll(varName, property.propertyName);
+			propertyString = propertyString.replaceAll(jsonKeyName, property.jsonKeyName);
+			propertyString = propertyString.replaceAll(varType, property.propertyType);
+			propertyString = propertyString.replaceAll(elementType, property.elementType);
+			propertyString = propertyString.replaceAll(capitalizedVarType, capitalizedVarTypeString);
+			propertyString = propertyString.replaceAll(capitalizedVarName, property.propertyName.capitalize());
+
+			content += propertyString;
+		});
+
+		content += method.bodyEnd;
+		content = content.replaceAll(modelName, this.className);
+
+		return content;
+	},
+
 	addInitializers: function() {
 		var content = "";
 
@@ -275,35 +350,28 @@ FileRepresenter.prototype = {
 			return content;
 		}
 
-		var properties = this.properties;
-		var className = this.className;
-		this.language.constructors.forEach(function(construct) {
-			content += "\n";
-			if (construct.comment) {
-				content += construct.comment;
-			}
-
-			content += construct.signature;
-			content += construct.bodyStart;
-
-			properties.forEach(function(property) {
-				var propertyString = construct.fetchBasicTypePropertyFromMap;
-				propertyString = propertyString.replaceAll(varName, property.propertyName);
-				propertyString = propertyString.replaceAll(jsonKeyName, property.jsonKeyName);
-				propertyString = propertyString.replaceAll(varType, property.propertyType);
-
-				content += propertyString;
-			});
-
-			content += construct.bodyEnd;
-			content = content.replaceAll(modelName, className);
+		var _this = this;
+		this.language.methods.constructors.forEach(function(construct) {
+			content += _this.getMethodContent(construct);
 		});
 
 		return content;
 	},
 
 	addUtilitiesMethods: function() {
-		return "";
+		var content = "";
+
+		if (this.methods) {
+			var _this = this;
+			this.methods.forEach(function(key) {
+				var method = _this.language.methods.others[key];
+				if (method) {
+					content += _this.getMethodContent(method);
+				}
+			});
+		}
+
+		return content;
 	},
 
 	toString: function() {
@@ -313,7 +381,7 @@ FileRepresenter.prototype = {
 		content = content + this.addCopyright();
 		content = content + this.addImports();
 
-		let modelDefinition = this.language.modelDefinition.replaceAll(modelName, this.className);
+		let modelDefinition = this.language.modelDefinition.replaceAll(modelName, this.className).replaceAll(modelIdentifier, this.modelIdentifier);
 		content = content + modelDefinition;
 		content = content + this.language.modelStart;
 
@@ -326,4 +394,21 @@ FileRepresenter.prototype = {
 
 		return content;
 	}
+}
+
+
+
+Date.prototype.dateString = function() {
+
+	var monthNames = [
+    	"January", "February", "March",
+    	"April", "May", "June", "July",
+    	"August", "September", "October",
+   	 	"November", "December"
+  	];
+
+  	var mm = this.getMonth();
+  	var dd = this.getDate();
+
+  	return monthNames[mm] + " " + (dd>9 ? '' : '0') + dd + ", " + this.getFullYear();
 }
