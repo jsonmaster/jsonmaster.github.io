@@ -79,6 +79,7 @@
     "staticImports": "import Foundation",
     "methods": {
         "constructorName": "Initializer",
+        "constructorChecked": "checked",
         "constructors": [{
             "signature": "\tenum CodingKeys: String, CodingKey ",
             "bodyStart": "{\n",

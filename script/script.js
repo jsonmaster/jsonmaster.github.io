@@ -35,7 +35,7 @@ let languages = {
     frameworks: {
       codable: {  
         name: "Gson",
-        file: "SwiftCodable.json"
+        file: "JavaGson.json"
       }
     }
   }
@@ -164,7 +164,7 @@ function updateUIForCurrentFramework(language) {
 
   $("#methodsCheckboxes").empty();
   $("#methodsCheckboxes").append('<label>Methods:</label>');
-  let initializerElement = checkBox("initializerCheckbox", language.methods.constructorName, "method-checkbox", "checked");
+  let initializerElement = checkBox("initializerCheckbox", language.methods.constructorName, "method-checkbox", language.methods.constructorChecked);
   $("#methodsCheckboxes").append(initializerElement);
 
   if (language.methods.others) {

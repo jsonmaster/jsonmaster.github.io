@@ -173,7 +173,7 @@ function getPropertyTypeName(value, language) {
 
 function getPropertyTypeForArray(value, language) {
 	if (value.length == 0) {
-		return "Any"; //lang.dataTypes.generic;
+		return language.dataTypes.generic;
 	} else {
 		return getPropertyTypeName(value[0], language);
 	}
@@ -271,6 +271,16 @@ FileRepresenter.prototype = {
 		return "";
 	},
 
+	getMethodContentWithDependency: function(method) {
+		var content = "";
+
+		content += method.bodyStartWithDependency;
+		content += method.bodyEndWithDependency;
+		content = content.replaceAll(modelName, this.className);
+
+		return content;
+	},
+
 	getMethodContent: function(method) {
 		var content = "\n";
 
@@ -279,13 +289,50 @@ FileRepresenter.prototype = {
 		}
 
 		content += method.signature;
+
+
+		if (method.dependency) {
+			if (this.methods.indexOf(method.dependency) > -1) {
+				return content += this.getMethodContentWithDependency(method);
+			}
+		}
+
 		content += method.bodyStart;
 
+		var language = this.language;
+
 		this.properties.forEach(function(property) {
+			
+
+			var capitalizedVarTypeString = property.propertyType.capitalize();
+
+			if (language.typesWithCustomFetchMethod) {
+				let index = language.typesWithCustomFetchMethod.indexOf(capitalizedVarTypeString);
+				if (index >= 0) {
+					capitalizedVarTypeString = language.customFetchTypeReplacement[index];
+				}
+			}
+
 			var propertyString = method.codeForEachProperty;
+
+			if (property.isCustomClass) {
+				if (method.codeForEachCustomProperty) {
+					propertyString = method.codeForEachCustomProperty;
+				}
+			} else if (property.isArray) {
+				if (property.elementTypeIsCustom && method.codeForEachCustomArrayProperty) {
+					propertyString = method.codeForEachCustomArrayProperty;
+				} else if (method.codeForEachArrayProperty) {
+					propertyString = method.codeForEachArrayProperty;
+				}
+			}
+
 			propertyString = propertyString.replaceAll(varName, property.propertyName);
 			propertyString = propertyString.replaceAll(jsonKeyName, property.jsonKeyName);
 			propertyString = propertyString.replaceAll(varType, property.propertyType);
+			propertyString = propertyString.replaceAll(elementType, property.elementType);
+			propertyString = propertyString.replaceAll(capitalizedVarType, capitalizedVarTypeString);
+			propertyString = propertyString.replaceAll(capitalizedVarName, property.propertyName.capitalize());
 
 			content += propertyString;
 		});
