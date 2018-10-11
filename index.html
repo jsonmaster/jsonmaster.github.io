@@ -32,6 +32,7 @@
 		<script src="codemirror/lib/codemirror.js"></script>
 		<script src="codemirror/mode/javascript/javascript.js"></script>
 		<script src="codemirror/mode/swift/swift.js"></script>
+		<script src="codemirror/mode/clike/clike.js"></script>
 	</head>
 	<body>
 		<!-- As a link -->
@@ -77,11 +78,7 @@
 						<textarea class="form-control form-font" rows="25" id="input"></textarea>
 					</div> 
 				</div>
-				<div class="col-sm-5">
-					<div class="form-group">
-						<label for="output">Output Model:</label>
-						<textarea class="form-control form-font" rows="25" id="output" readonly></textarea>
-					</div>
+				<div class="col-sm-5" id="output">
 				</div>
 			</div>
 		</div>

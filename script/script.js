@@ -2,7 +2,8 @@ let languages = {
   swift: {
     name: "Swift",
     frameworks: {
-      codable: {  
+      codable: {
+        mode: "text/x-swift",
         name: "Codable",
         file: "SwiftCodable.json",
         identifiers: [{
@@ -20,7 +21,8 @@ let languages = {
   java: {
     name: "Java",
     frameworks: {
-      codable: {  
+      codable: {
+        mode: "text/x-java",
         name: "Gson",
         file: "JavaGson.json"
       }
@@ -31,7 +33,7 @@ let languages = {
 var selectedLanguage = languages.swift
 var selectedFramework = selectedLanguage.frameworks.codable
 var inputTextArea;
-var outputTextArea;
+// var outputTextArea;
 
 $(document).ready(function() {
 
@@ -42,12 +44,12 @@ $(document).ready(function() {
         indentUnit: 4
     });  
   
-    outputTextArea = CodeMirror.fromTextArea(document.getElementById('output'), {
-        mode: "text/x-swift",
-        theme: "default",
-        lineNumbers: true,
-        readOnly: true
-    });
+    // outputTextArea = CodeMirror.fromTextArea(document.getElementById('output'), {
+    //     mode: "text/x-swift",
+    //     theme: "default",
+    //     lineNumbers: true,
+    //     readOnly: true
+    // });
 
     inputTextArea.on("change", function(cm, change) {
     	inputChanged();
@@ -58,7 +60,7 @@ $(document).ready(function() {
     });
 
     inputTextArea.setSize(null, $("#input").innerHeight());
-    outputTextArea.setSize(null, $("#input").innerHeight());
+    // outputTextArea.setSize(null, $("#input").innerHeight());
 
    	Object.keys(languages).forEach(function(key) {
    		let value = languages[key];
@@ -102,7 +104,14 @@ function buildClasses(language) {
   builder.methods = methods;
 
   let result = builder.classes(input);
-  outputTextArea.setValue(result);
+  showResult(result);
+}
+
+function showResult(classes) {
+  $('#output').empty();
+  classes.forEach(function(file) {
+    addCodeMirror(file);
+  });
 }
 
 function updateSelectedLanguage() {
@@ -180,6 +189,46 @@ function checkBox(checkid, checkvalue, checkclass, checkchecked) {
       <label for="${checkid}" class="form-control" aria-label="Text input with checkbox">${checkvalue}</label>
     </div>
   `;
+}
+
+function addCodeMirror(file) {
+  let fileName = `${file.className}.${file.language.fileExtension}`;
+  let textView = `
+          <div class="form-group">
+            <label for="${fileName}TextArea">${fileName}</label>
+            <textarea class="form-control form-font" rows="20" id="${fileName}TextArea" readonly>${file.toString()}</textarea>
+          </div>
+          <div class="form-group">
+            <button type="button" id="${fileName}" class="btn btn-success output-textarea-button">Download</button>
+          </div>
+  `;
+
+  $('#output').append(textView);
+
+  CodeMirror.fromTextArea(document.getElementById(fileName+"TextArea"), {
+    mode: selectedFramework.mode,
+    theme: "default",
+    lineNumbers: true,
+    readOnly: true
+  });
+
+  $('.output-textarea-button').click(function() {
+    let id = this.id;
+    download(id, document.getElementById(id+'TextArea').innerHTML);
+  });
+}
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
 }
 
 let examlpeJSON = '{\n\t"test_int": 101,\n\t"test_bool": true,\n\t"test_string": "foo",\n\t"test_object": {\n\t\t"test_double": 1.12\n\t}\n}'

@@ -35,18 +35,18 @@ FileBuilder.prototype = {
 			let files = this.getFiles(className, json, this.language);
 
 
-			var result = "";
+			// var result = "";
 
-			files.forEach(function(file) {
-				let fileString = file.toString();
-				result += fileString;
-				result += "\n\n";
-			});
+			// files.forEach(function(file) {
+			// 	let fileString = file.toString();
+			// 	result += fileString;
+			// 	result += "\n\n";
+			// });
 
-			return result;
+			return files;
 		}
 
-		return "";
+		return new Array();
 	}
 }
 
@@ -254,7 +254,7 @@ FileRepresenter.prototype = {
 	},
 
 	addImports: function() {
-		return "";
+		return this.language.staticImports + "\n";
 	},
 
 	addProperties: function() {
