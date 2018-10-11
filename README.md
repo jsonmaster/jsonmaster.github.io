@@ -1,4 +1,4 @@
-# jsonmaster.github.io
+# JSON Master
 
 Visit: https://jsonmaster.github.io
 
