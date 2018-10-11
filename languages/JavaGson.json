@@ -84,7 +84,7 @@
     "fileExtension": "java",
     "instanceVarDefinition": "\t@SerializedName(\"<!JsonKeyName!>\")\n\tprivate <!VarType!> <!VarName!>;\n",
     "modelEnd": "\n}",
-    "staticImports": "import Foundation",
+    "staticImports": "\nimport org.json.*;\nimport java.util.*;\nimport com.google.gson.annotations.SerializedName;",
     "methods": {
         "constructorName": "Constructor",
         "constructorChecked": "",
