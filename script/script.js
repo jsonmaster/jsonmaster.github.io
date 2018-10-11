@@ -15,6 +15,20 @@ let languages = {
           value: "Class",
           checked: ""
         }]
+      },
+      swiftyjson: {
+        mode: "text/x-swift",
+        name: "SwiftyJSON",
+        file: "SwiftyJSON.json",
+        identifiers: [{
+          key: "struct",
+          value: "Struct",
+          checked: "checked"
+        },{
+          key: "class",
+          value: "Class",
+          checked: ""
+        }]
       }
     }
   },
@@ -39,17 +53,10 @@ $(document).ready(function() {
 
 	inputTextArea = CodeMirror.fromTextArea(document.getElementById('input'), {
         mode: {name: "javascript", json: true},
-        theme: "default",
+        theme: "ambiance",
         lineNumbers: true,
         indentUnit: 4
-    });  
-  
-    // outputTextArea = CodeMirror.fromTextArea(document.getElementById('output'), {
-    //     mode: "text/x-swift",
-    //     theme: "default",
-    //     lineNumbers: true,
-    //     readOnly: true
-    // });
+    });
 
     inputTextArea.on("change", function(cm, change) {
     	inputChanged();
@@ -86,6 +93,11 @@ function inputChanged() {
 }
 
 function buildClasses(language) {
+  let result = getAllClasses(language);
+  showResult(result);
+}
+
+function getAllClasses(language) {
   let input = inputTextArea.getValue();
   let builder = new FileBuilder(language);
   builder.isInitializers = $('#initializerCheckbox').is(':checked');
@@ -103,14 +115,26 @@ function buildClasses(language) {
 
   builder.methods = methods;
 
-  let result = builder.classes(input);
-  showResult(result);
+  return builder.classes(input);
 }
 
 function showResult(classes) {
   $('#output').empty();
+
+  let topButton = `
+    <div class="form-group">
+      <button type="button" id="downloadAllButton" class="btn btn-success">Download All</button>
+    </div>
+  `;
+
+  $('#output').append(topButton);
+
   classes.forEach(function(file) {
     addCodeMirror(file);
+  });
+
+  $('#downloadAllButton').click(function() {
+    downloadAllFiles();
   });
 }
 
@@ -194,41 +218,58 @@ function checkBox(checkid, checkvalue, checkclass, checkchecked) {
 function addCodeMirror(file) {
   let fileName = `${file.className}.${file.language.fileExtension}`;
   let textView = `
+      <div class="form-group bg-secondary text-light border border-secondary rounded px-2 pt-2">
           <div class="form-group">
             <label for="${fileName}TextArea">${fileName}</label>
             <textarea class="form-control form-font" rows="20" id="${fileName}TextArea" readonly>${file.toString()}</textarea>
           </div>
           <div class="form-group">
-            <button type="button" id="${fileName}" class="btn btn-success output-textarea-button">Download</button>
+            <button type="button" id="${fileName}" class="btn btn-success btn-sm output-textarea-button">Download</button>
           </div>
+      </div>
   `;
 
   $('#output').append(textView);
 
   CodeMirror.fromTextArea(document.getElementById(fileName+"TextArea"), {
     mode: selectedFramework.mode,
-    theme: "default",
+    theme: "ambiance",
     lineNumbers: true,
     readOnly: true
   });
 
   $('.output-textarea-button').click(function() {
     let id = this.id;
-    download(id, document.getElementById(id+'TextArea').innerHTML);
+    downloadFile(id, document.getElementById(id+'TextArea').innerHTML);
   });
 }
 
-function download(filename, text) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
+function downloadFile(filename, text) {
+  let data = new Blob([text], {type: "text/plain;charset=utf-8"});
+  saveAs(data, filename);
+}
 
-  element.style.display = 'none';
-  document.body.appendChild(element);
+function downloadAllFiles() {
 
-  element.click();
+  $.getJSON("./languages/" + selectedFramework.file, {}, function(language) {
+    let result = getAllClasses(language);
 
-  document.body.removeChild(element);
+    var zip = new JSZip();
+
+    result.forEach(function(file) {
+      zip.file(file.className+"."+file.language.fileExtension, file.toString());
+    });
+
+    zip.generateAsync({type:"blob"}).then(function(content) {
+      var fileName = $('#rootClassName').val();
+      if (fileName == "") {
+        fileName = "JSONModel";
+      }
+      fileName += ".zip";
+
+      saveAs(content, fileName);
+    });
+  });
 }
 
 let examlpeJSON = '{\n\t"test_int": 101,\n\t"test_bool": true,\n\t"test_string": "foo",\n\t"test_object": {\n\t\t"test_double": 1.12\n\t}\n}'
