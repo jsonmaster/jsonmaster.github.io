@@ -67,10 +67,10 @@ FileBuilder.prototype.getFiles = function(fileName, object, language) {
 		if (prevIndex < 0) {
 			if (property.isCustomClass) {
 				let file = _this.getFiles(property.propertyType, value, language);
-				files = file;
+				files = files.concat(file);
 			} else if (property.isArray && property.elementTypeIsCustom) {
 				let file = _this.getFiles(property.elementType, value, language);
-				files = file;
+				files = files.concat(file);
 			}
 
 			properties.push(property);
