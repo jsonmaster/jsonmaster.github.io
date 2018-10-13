@@ -30,7 +30,7 @@ FileBuilder.prototype = {
 			if (json) {
 				var className = this.rootClassName;
 				if (!className) {
-					className = "Sample";
+					className = "RootClass";
 				}
 
 				let files = this.getFiles(className, json, this.language);

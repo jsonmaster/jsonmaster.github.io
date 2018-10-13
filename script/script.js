@@ -35,10 +35,15 @@ let languages = {
   java: {
     name: "Java",
     frameworks: {
-      codable: {
+      gson: {
         mode: "text/x-java",
         name: "Gson",
         file: "JavaGson.json"
+      },
+      android: {
+        mode: "text/x-java",
+        name: "Android/JSONObject",
+        file: "JavaAndroid.json"
       }
     }
   }
