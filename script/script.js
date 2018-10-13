@@ -93,8 +93,14 @@ function inputChanged() {
 }
 
 function buildClasses(language) {
-  let result = getAllClasses(language);
-  showResult(result);
+  try {
+    let result = getAllClasses(language);
+    showResult(result);
+    $('#errorAlert').hide();
+  } catch (e) {
+    $('#errorAlert').text(e.message.replaceAll("JSON.parse: ",""));
+    $('#errorAlert').show();
+  }
 }
 
 function getAllClasses(language) {
@@ -115,7 +121,11 @@ function getAllClasses(language) {
 
   builder.methods = methods;
 
-  return builder.classes(input);
+  try {
+    return builder.classes(input);
+  } catch (e) {
+    throw e;
+  }
 }
 
 function showResult(classes) {

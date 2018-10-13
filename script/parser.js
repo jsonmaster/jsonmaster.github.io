@@ -24,26 +24,20 @@ FileBuilder.prototype = {
 	constructor: FileBuilder,
 	classes: function(string) {
 
-		let json = JSON.parse(string);
+		try {
+			let json = JSON.parse(string);
 
-		if (json) {
-			var className = this.rootClassName;
-			if (!className) {
-				className = "Sample";
+			if (json) {
+				var className = this.rootClassName;
+				if (!className) {
+					className = "Sample";
+				}
+
+				let files = this.getFiles(className, json, this.language);
+				return files;
 			}
-
-			let files = this.getFiles(className, json, this.language);
-
-
-			// var result = "";
-
-			// files.forEach(function(file) {
-			// 	let fileString = file.toString();
-			// 	result += fileString;
-			// 	result += "\n\n";
-			// });
-
-			return files;
+		} catch (e) {
+			throw e;
 		}
 
 		return new Array();
@@ -73,10 +67,10 @@ FileBuilder.prototype.getFiles = function(fileName, object, language) {
 		if (prevIndex < 0) {
 			if (property.isCustomClass) {
 				let file = _this.getFiles(property.propertyType, value, language);
-				files = file;
+				files = files.concat(file);
 			} else if (property.isArray && property.elementTypeIsCustom) {
 				let file = _this.getFiles(property.elementType, value, language);
-				files = file;
+				files = files.concat(file);
 			}
 
 			properties.push(property);
