@@ -46,6 +46,21 @@ let languages = {
         file: "JavaAndroid.json"
       }
     }
+  },
+  csharo: {
+    name: "C#",
+    frameworks: {
+      csharpNewtonsoft: {
+        mode: "text/x-csharp",
+        name: "C# Newtonsoft",
+        file: "CSharpNewtonsoft.json"
+      },
+      csharpClass: {
+        mode: "text/x-csharp",
+        name: "C# Class",
+        file: "CSharpClass.json"
+      }
+    }
   }
 }
 
@@ -57,39 +72,39 @@ var inputTextArea;
 $(document).ready(function() {
 
 	inputTextArea = CodeMirror.fromTextArea(document.getElementById('input'), {
-        mode: {name: "javascript", json: true},
-        theme: "ambiance",
-        lineNumbers: true,
-        indentUnit: 4
-    });
+    mode: {name: "javascript", json: true},
+    theme: "ambiance",
+    lineNumbers: true,
+    indentUnit: 4
+  });
 
-    inputTextArea.on("change", function(cm, change) {
-    	inputChanged();
-    });
+  inputTextArea.on("change", function(cm, change) {
+   inputChanged();
+ });
 
-    $('#rootClassName').bind('input propertychange', function() {
-      inputChanged();
-    });
+  $('#rootClassName').bind('input propertychange', function() {
+    inputChanged();
+  });
 
-    inputTextArea.setSize(null, $("#input").innerHeight());
+  inputTextArea.setSize(null, $("#input").innerHeight());
     // outputTextArea.setSize(null, $("#input").innerHeight());
 
-   	Object.keys(languages).forEach(function(key) {
-   		let value = languages[key];
-   		let element = $('<a class="dropdown-item dropdown-item-language" id="' + key + '" href="#">' + value.name + '</a>');
-   		$("#dropdownMenuLanguage").append(element);
-   	});
+    Object.keys(languages).forEach(function(key) {
+     let value = languages[key];
+     let element = $('<a class="dropdown-item dropdown-item-language" id="' + key + '" href="#">' + value.name + '</a>');
+     $("#dropdownMenuLanguage").append(element);
+   });
 
-   	$('.dropdown-item-language').click(function () {
-   		let key = this.id
-   		selectedLanguage = languages[key]
-   		updateSelectedLanguage();
-   	});
+    $('.dropdown-item-language').click(function () {
+     let key = this.id
+     selectedLanguage = languages[key]
+     updateSelectedLanguage();
+   });
 
-   	updateSelectedLanguage();
+    updateSelectedLanguage();
 
     inputTextArea.setValue(examlpeJSON);
-});
+  });
 
 function inputChanged() {
 	$.getJSON("./languages/" + selectedFramework.file, {}, function(language) {
@@ -137,9 +152,9 @@ function showResult(classes) {
   $('#output').empty();
 
   let topButton = `
-    <div class="form-group">
-      <button type="button" id="downloadAllButton" class="btn btn-success">Download All</button>
-    </div>
+  <div class="form-group">
+  <button type="button" id="downloadAllButton" class="btn btn-success">Download All</button>
+  </div>
   `;
 
   $('#output').append(topButton);
@@ -171,7 +186,7 @@ function updateSelectedLanguage() {
     updateSelectedFramework();
   });
 
-	updateSelectedFramework();
+  updateSelectedFramework();
 }
 
 function updateSelectedFramework() {
@@ -198,9 +213,14 @@ function updateSelectedFramework() {
 function updateUIForCurrentFramework(language) {
 
   $("#methodsCheckboxes").empty();
-  $("#methodsCheckboxes").append('<label>Methods:</label>');
-  let initializerElement = checkBox("initializerCheckbox", language.methods.constructorName, "method-checkbox", language.methods.constructorChecked);
-  $("#methodsCheckboxes").append(initializerElement);
+
+  if (language.methods.constructors || language.methods.others) {
+    $("#methodsCheckboxes").append('<label>Methods:</label>');
+    if (language.methods.constructors) {
+      let initializerElement = checkBox("initializerCheckbox", language.methods.constructorName, "method-checkbox", language.methods.constructorChecked);
+      $("#methodsCheckboxes").append(initializerElement);
+    }
+  }
 
   if (language.methods.others) {
     Object.keys(language.methods.others).forEach(function(key) {
@@ -211,7 +231,7 @@ function updateUIForCurrentFramework(language) {
   }
 
   $('.method-checkbox').change(function() {
-      inputChanged();
+    inputChanged();
   });
 
   buildClasses(language);
@@ -219,29 +239,29 @@ function updateUIForCurrentFramework(language) {
 
 function checkBox(checkid, checkvalue, checkclass, checkchecked) {
   return `
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input class="${checkclass}" type="checkbox" aria-label="Checkbox for following text input" id="${checkid}" ${checkchecked}>
-        </div>
-      </div>
-      <label for="${checkid}" class="form-control" aria-label="Text input with checkbox">${checkvalue}</label>
-    </div>
+  <div class="input-group mb-3">
+  <div class="input-group-prepend">
+  <div class="input-group-text">
+  <input class="${checkclass}" type="checkbox" aria-label="Checkbox for following text input" id="${checkid}" ${checkchecked}>
+  </div>
+  </div>
+  <label for="${checkid}" class="form-control" aria-label="Text input with checkbox">${checkvalue}</label>
+  </div>
   `;
 }
 
 function addCodeMirror(file) {
   let fileName = `${file.className}.${file.language.fileExtension}`;
   let textView = `
-      <div class="form-group bg-secondary text-light border border-secondary rounded px-2 pt-2">
-          <div class="form-group">
-            <label for="${fileName}TextArea">${fileName}</label>
-            <textarea class="form-control form-font" rows="20" id="${fileName}TextArea" readonly>${file.toString()}</textarea>
-          </div>
-          <div class="form-group">
-            <button type="button" id="${fileName}" class="btn btn-success btn-sm output-textarea-button">Download</button>
-          </div>
-      </div>
+  <div class="form-group bg-secondary text-light border border-secondary rounded px-2 pt-2">
+  <div class="form-group">
+  <label for="${fileName}TextArea">${fileName}</label>
+  <textarea class="form-control form-font" rows="20" id="${fileName}TextArea" readonly>${file.toString()}</textarea>
+  </div>
+  <div class="form-group">
+  <button type="button" id="${fileName}" class="btn btn-success btn-sm output-textarea-button">Download</button>
+  </div>
+  </div>
   `;
 
   $('#output').append(textView);

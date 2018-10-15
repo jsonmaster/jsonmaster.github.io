@@ -85,6 +85,7 @@
     "instanceVarDefinition": "\tprivate <!VarType!> <!VarName!>;\n",
     "modelEnd": "\n}",
     "staticImports": "\nimport org.json.*;\nimport java.util.*;",
+    "supportsCamelcasing": true,
     "methods": {
         "constructorName": "Constructor",
         "constructorChecked": "checked",
@@ -102,7 +103,7 @@
             "getterSetter": {
                 "name": "Getter Setter",
                 "signature": "",
-                "bodyStart": "",                     
+                "bodyStart": "",
                 "bodyEnd": "",
                 "codeForEachProperty": "\tpublic void set<!CapitalizedVarName!>(<!VarType!> <!VarName!>) {\n\t\tthis.<!VarName!> = <!VarName!>;\n\t}\n\tpublic <!VarType!> get<!CapitalizedVarName!>() {\n\t\treturn this.<!VarName!>;\n\t}\n",
                 "comment": "",

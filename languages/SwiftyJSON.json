@@ -93,6 +93,7 @@
     "instanceVarDefinition": "\tlet <!VarName!>: <!VarType!>?\n",
     "modelEnd": "\n}",
     "staticImports": "import Foundation\nimport SwiftyJSON",
+    "supportsCamelcasing": true,
     "methods": {
         "constructorName": "Initializer",
         "constructorChecked": "checked",

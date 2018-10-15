@@ -77,6 +77,7 @@
     "instanceVarDefinition": "\tlet <!VarName!>: <!VarType!>?\n",
     "modelEnd": "\n}",
     "staticImports": "import Foundation",
+    "supportsCamelcasing": true,
     "methods": {
         "constructorName": "Initializer",
         "constructorChecked": "checked",

@@ -85,6 +85,7 @@
     "instanceVarDefinition": "\t@SerializedName(\"<!JsonKeyName!>\")\n\tprivate <!VarType!> <!VarName!>;\n",
     "modelEnd": "\n}",
     "staticImports": "\nimport org.json.*;\nimport java.util.*;\nimport com.google.gson.annotations.SerializedName;",
+    "supportsCamelcasing": true,
     "methods": {
         "constructorName": "Constructor",
         "constructorChecked": "",
