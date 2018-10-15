@@ -30,7 +30,7 @@ FileBuilder.prototype = {
 			if (json) {
 				var className = this.rootClassName;
 				if (!className) {
-					className = "Sample";
+					className = "RootClass";
 				}
 
 				let files = this.getFiles(className, json, this.language);
@@ -126,12 +126,15 @@ function getProperty(key, value, language) {
 }
 
 function getTypeNameFromKey(value, language) {
-	return getLanguageName(value, language).capitalize();
+	return underscoreToCamelcase(getLanguageName(value, language)).capitalize();
 }
 
 function getLanguageName(value, language) {
 	var propertyName = cleanupName(value);
-	propertyName = underscoreToCamelcase(propertyName);
+
+	if (language.supportsCamelcasing) {
+		propertyName = underscoreToCamelcase(propertyName);
+	}
 
 	if (language.reservedKeywords) {
 		if (language.reservedKeywords.indexOf(propertyName) > -1) {
@@ -183,32 +186,32 @@ function underscoreToCamelcase(value) {
 
 	var find = /(\_\w)/g;
 	var convert =  function(matches){
-	    return matches[1].toUpperCase();
+		return matches[1].toUpperCase();
 	};
 
 	var camelCaseString = str.replace(
-	    find,
-	    convert
-	);
+		find,
+		convert
+		);
 
 	return camelCaseString;
 }
 
 function isInt(n){
-    return Number(n) === n && n % 1 === 0;
+	return Number(n) === n && n % 1 === 0;
 }
 
 function isFloat(n){
-    return Number(n) === n && n % 1 !== 0;
+	return Number(n) === n && n % 1 !== 0;
 }
 
 String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+	return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
 String.prototype.replaceAll = function(from, to) {
 	var re = new RegExp(from,"g");
-    return this.replace(re, to);
+	return this.replace(re, to);
 }
 
 // Property
@@ -399,14 +402,14 @@ FileRepresenter.prototype = {
 Date.prototype.dateString = function() {
 
 	var monthNames = [
-    	"January", "February", "March",
-    	"April", "May", "June", "July",
-    	"August", "September", "October",
-   	 	"November", "December"
-  	];
+	"January", "February", "March",
+	"April", "May", "June", "July",
+	"August", "September", "October",
+	"November", "December"
+	];
 
-  	var mm = this.getMonth();
-  	var dd = this.getDate();
+	var mm = this.getMonth();
+	var dd = this.getDate();
 
-  	return monthNames[mm] + " " + (dd>9 ? '' : '0') + dd + ", " + this.getFullYear();
+	return monthNames[mm] + " " + (dd>9 ? '' : '0') + dd + ", " + this.getFullYear();
 }

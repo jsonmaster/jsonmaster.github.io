@@ -82,13 +82,13 @@
 
     "modelDefinition": "\npublic class <!ModelName!> ",
     "fileExtension": "java",
-    "instanceVarDefinition": "\t@SerializedName(\"<!JsonKeyName!>\")\n\tprivate <!VarType!> <!VarName!>;\n",
+    "instanceVarDefinition": "\tprivate <!VarType!> <!VarName!>;\n",
     "modelEnd": "\n}",
-    "staticImports": "\nimport org.json.*;\nimport java.util.*;\nimport com.google.gson.annotations.SerializedName;",
+    "staticImports": "\nimport org.json.*;\nimport java.util.*;",
     "supportsCamelcasing": true,
     "methods": {
         "constructorName": "Constructor",
-        "constructorChecked": "",
+        "constructorChecked": "checked",
         "constructors": [{
             "signature": "\tpublic <!ModelName!>(JSONObject jsonObject) ",
             "bodyStart": "{\n\t\tif (jsonObject == null) {\n\t\t\treturn;\n\t\t}\n",
@@ -103,7 +103,7 @@
             "getterSetter": {
                 "name": "Getter Setter",
                 "signature": "",
-                "bodyStart": "",                     
+                "bodyStart": "",
                 "bodyEnd": "",
                 "codeForEachProperty": "\tpublic void set<!CapitalizedVarName!>(<!VarType!> <!VarName!>) {\n\t\tthis.<!VarName!> = <!VarName!>;\n\t}\n\tpublic <!VarType!> get<!CapitalizedVarName!>() {\n\t\treturn this.<!VarName!>;\n\t}\n",
                 "comment": "",
@@ -118,7 +118,7 @@
                 "codeForEachCustomProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>.toJsonObject());\n",
                 "codeForEachCustomArrayProperty": "\t\t\tif (<!VarName!> != null && <!VarName!>.length > 0) {\n\t\t\t\tJSONArray <!VarName!>JsonArray = new JSONArray();\n\t\t\t\tfor (<!ElementType!> <!VarName!>Element : <!VarName!>) {\n\t\t\t\t\t<!VarName!>JsonArray.put(<!VarName!>Element.toJsonObject());\n\t\t\t\t}\n\t\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>JsonArray);\n\t\t\t}\n",
                 "comment": "",
-                "checked": ""
+                "checked": "checked"
             },
             "toString": {
                 "name": "toString",
@@ -132,7 +132,7 @@
                 "codeForEachCustomProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>.toJsonObject());\n",
                 "codeForEachCustomArrayProperty": "\t\t\tif (<!VarName!> != null && <!VarName!>.length > 0) {\n\t\t\t\tJSONArray <!VarName!>JsonArray = new JSONArray();\n\t\t\t\tfor (<!ElementType!> <!VarName!>Element : <!VarName!>) {\n\t\t\t\t\t<!VarName!>JsonArray.put(<!VarName!>Element.toJsonObject());\n\t\t\t\t}\n\t\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>JsonArray);\n\t\t\t}\n",
                 "comment": "",
-                "checked": ""
+                "checked": "checked"
             }
         }
     }
