@@ -76,51 +76,52 @@
 				<li class="nav-item">
 					<a class="nav-link" href="https://github.com/jsonmaster/jsonmaster.github.io/issues" target="_blank">Issues</a>
 				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container-fluid bg-light pt-3">
+		<div class="row">
+			<div class="col-sm-2">
+				<div class="form-group">
+					<label for="dropdownMenuButtonLanguage">Language:</label>
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Dropdown button
+						</button>
+						<div class="dropdown-menu" id="dropdownMenuLanguage" aria-labelledby="dropdownMenuButtonLanguage">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="dropdownMenuButtonFramework">Framework:</label>
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonFramework" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Dropdown button
+						</button>
+						<div class="dropdown-menu" id="dropdownMenuFramework" aria-labelledby="dropdownMenuButtonFramework">
+						</div>
+					</div>
+				</div>
+				<div class="form-group" id="modelIdentifiers">
+				</div>
+				<div class="form-group">
+					<label for="rootClassName">Root class name:</label>
+					<input type="text" placeholder="Enter root class name" class="form-control form-font" id="rootClassName"/>
+				</div>
+				<div class="form-group" id="methodsCheckboxes">
+				</div>
 			</div>
-		</nav>
-		<div class="container-fluid bg-light pt-3">
-			<div class="row">
-				<div class="col-sm-2">
-					<div class="form-group">
-						<label for="dropdownMenuButtonLanguage">Language:</label>
-						<div class="dropdown">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Dropdown button
-							</button>
-							<div class="dropdown-menu" id="dropdownMenuLanguage" aria-labelledby="dropdownMenuButtonLanguage">
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="dropdownMenuButtonFramework">Framework:</label>
-						<div class="dropdown">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonFramework" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Dropdown button
-							</button>
-							<div class="dropdown-menu" id="dropdownMenuFramework" aria-labelledby="dropdownMenuButtonFramework">
-							</div>
-						</div>
-					</div>
-					<div class="form-group" id="modelIdentifiers">
-					</div>
-					<div class="form-group">
-						<label for="rootClassName">Root class name:</label>
-						<input type="text" placeholder="Enter root class name" class="form-control form-font" id="rootClassName"/>
-					</div>
-					<div class="form-group" id="methodsCheckboxes">
-					</div>
+			<div class="col-sm-5">
+				<div class="form-group bg-secondary text-light border border-secondary rounded p-2">
+					<label for="input">Input JSON:</label>
+					<textarea class="form-control form-font" rows="25" id="input"></textarea>
+				</div> 
+				<div class="alert alert-danger" id="errorAlert" role="alert">
 				</div>
-				<div class="col-sm-5">
-					<div class="form-group bg-secondary text-light border border-secondary rounded p-2">
-						<label for="input">Input JSON:</label>
-						<textarea class="form-control form-font" rows="25" id="input"></textarea>
-					</div> 
-					<div class="alert alert-danger" id="errorAlert" role="alert">
-					</div>
-				</div>
-				<div class="col-sm-5" id="output">
-				</div>
+			</div>
+			<div class="col-sm-5" id="output">
 			</div>
 		</div>
-	</body>
-	</html>
+	</div>
+</body>
+</html>
