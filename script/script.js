@@ -29,6 +29,20 @@ let languages = {
           value: "Class",
           checked: ""
         }]
+      },
+      dictionary: {
+        mode: "text/x-swift",
+        name: "Dictionary",
+        file: "SwiftDictionary.json",
+        identifiers: [{
+          key: "struct",
+          value: "Struct",
+          checked: "checked"
+        },{
+          key: "class",
+          value: "Class",
+          checked: ""
+        }]
       }
     }
   },

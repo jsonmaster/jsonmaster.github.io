@@ -116,22 +116,32 @@
     "fileExtension": "swift",
     "instanceVarDefinition": "\tlet <!VarName!>: <!VarType!>?\n",
     "modelEnd": "\n}",
-    "staticImports": "import Foundation\nimport SwiftyJSON",
+    "staticImports": "import Foundation",
     "supportsCamelcasing": true,
     "methods": {
         "constructorName": "Initializer",
         "constructorChecked": "checked",
         "constructors": [{
-            "signature": "\tinit(_ json: JSON) ",
+            "signature": "\tinit(_ dict: [String: Any]) ",
             "bodyStart": "{\n",
             "bodyEnd": "\t}\n",
-            "codeForEachProperty": "\t\t<!VarName!> = json[\"<!JsonKeyName!>\"]<!CapitalizedVarType!>\n",
-            "codeForEachArrayProperty": "\t\t<!VarName!> = json[\"<!JsonKeyName!>\"].arrayValue.map { $0<!CapitalizedVarType!> }\n",
-            "codeForEachCustomProperty": "\t\t<!VarName!> = <!VarType!>(json[\"<!JsonKeyName!>\"])\n",
-            "codeForEachCustomArrayProperty": "\t\t<!VarName!> = json[\"<!JsonKeyName!>\"].arrayValue.map { <!ElementType!>($0) }\n",
+            "codeForEachProperty": "\t\t<!VarName!> = dict[\"<!JsonKeyName!>\"] as? <!VarType!>\n",
+            "codeForEachCustomProperty": "\n\t\tif let <!VarName!>Dict = dict[\"<!JsonKeyName!>\"] as? [String: Any] {\n\t\t\t<!VarName!> = <!VarType!>(<!VarName!>Dict)\n\t\t}\n",
+            "codeForEachCustomArrayProperty": "\n\t\tif let <!VarName!>DictArray = dict[\"<!JsonKeyName!>\"] as? [[String: Any]] {\n\t\t\t<!VarName!> = <!VarName!>DictArray.map { <!ElementType!>($0) }\n\t\t}\n",
             "comment": ""
         }],
         "others": {
+            "dictionaryMethod": {
+                "name": "toDictionary",
+                "signature": "\tfunc toDictionary() -> [String: Any] ",
+                "bodyStart": "{\n\t\tvar jsonDict = [String: Any]()\n",
+                "bodyEnd": "\t\treturn jsonDict\n\t}\n",
+                "codeForEachProperty": "\t\tjsonDict[\"<!JsonKeyName!>\"] = <!VarName!>\n",
+                "codeForEachCustomProperty": "\t\tjsonDict[\"<!JsonKeyName!>\"] = <!VarName!>?.toDictionary()\n",
+                "codeForEachCustomArrayProperty": "\t\tjsonDict[\"<!JsonKeyName!>\"] = <!VarName!>?.map { $0.toDictionary() }\n",
+                "comment": "",
+                "checked": "checked"
+            }
         }
     }
 }
