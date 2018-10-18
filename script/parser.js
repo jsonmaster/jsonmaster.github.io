@@ -12,6 +12,7 @@ let jsonKeyName = "<!JsonKeyName!>"
 let constKeyName = "<!ConstKeyName!>"
 let additionalCustomTypeProperty = "<!AdditionalForCustomTypeProperty!>"
 let modelIdentifier = "<!ModelIdentifier!>"
+let modelDefinitionProperties = "<!ModelDefinitionProperty!>"
 
 
 // FileBuilder
@@ -255,13 +256,17 @@ FileRepresenter.prototype = {
 	},
 
 	addProperties: function() {
-		var propertyString = "\n";
 
-		this.properties.forEach(function(property) {
-			propertyString += property.toString();
-		});
+		if (this.language.instanceVarDefinition) {
+			var propertyString = "\n";
 
-		return propertyString;
+			this.properties.forEach(function(property) {
+				propertyString += property.toString();
+			});
+
+			return propertyString;
+		}
+		return "";
 	},
 
 	addSetterGetter: function() {
@@ -375,6 +380,23 @@ FileRepresenter.prototype = {
 		return content;
 	},
 
+	addModelDefinition: function() {
+
+		var modelDefinition = this.language.modelDefinition.replaceAll(modelName, this.className).replaceAll(modelIdentifier, this.modelIdentifier);
+		
+
+		if (this.language.codeForEachProperty) {
+			var _language = this.language;
+			let propertyList = this.properties.map(function (property) { 
+				return _language.codeForEachProperty.replaceAll(varName, property.propertyName).replaceAll(jsonKeyName, property.jsonKeyName).replaceAll(varType, property.propertyType);
+			}).join(",");
+
+			modelDefinition = modelDefinition.replaceAll(modelDefinitionProperties, propertyList);
+		}
+
+		return modelDefinition;
+	},
+
 	toString: function() {
 		var content = "";
 
@@ -382,8 +404,7 @@ FileRepresenter.prototype = {
 		content = content + this.addCopyright();
 		content = content + this.addImports();
 
-		let modelDefinition = this.language.modelDefinition.replaceAll(modelName, this.className).replaceAll(modelIdentifier, this.modelIdentifier);
-		content = content + modelDefinition;
+		content = content + this.addModelDefinition();
 		content = content + this.language.modelStart;
 
 		content = content + this.addProperties();

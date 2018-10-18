@@ -11,6 +11,8 @@ Visit: https://jsonmaster.github.io
 2. **Java**
     - [Gson](https://github.com/google/gson)
     - [Android/JSONObject](https://developer.android.com/reference/org/json/JSONObject)
-3. **C#**
+3. **Kotlin**
+    - [Gson](https://github.com/google/gson)
+4. **C#**
     - [Newtonsoft](https://www.newtonsoft.com/json/help/html/SerializingJSON.htm)
     - C# Class
