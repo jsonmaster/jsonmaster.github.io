@@ -283,7 +283,9 @@ function showExampleCode(language) {
     var parsed = reader.parse(codeText);
     var result = htmlwriter.render(parsed);
     $('#exampleCode').html(result);
-  }  
+  } else {
+    $('#exampleCode').html("");
+  }
 }
 
 function checkBox(checkid, checkvalue, checkclass, checkchecked) {
