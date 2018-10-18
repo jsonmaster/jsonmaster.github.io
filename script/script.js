@@ -61,6 +61,16 @@ let languages = {
       }
     }
   },
+  kotlin: {
+    name: "Kotlin",
+    frameworks: {
+      gson: {
+        mode: "text/x-java",
+        name: "Gson",
+        file: "KotlinGson.json"
+      }
+    }
+  },
   csharo: {
     name: "C#",
     frameworks: {
