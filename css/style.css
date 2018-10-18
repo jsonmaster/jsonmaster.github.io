@@ -10,4 +10,4 @@
   line-height: inherit;
 }
 
-pre { display: block; padding: 0.5em; color: #333; background: #f8f8ff; border: 1px solid #ccc; border-radius: 4px; }
+pre {-moz-tab-size: 4; tab-size: 4; display: block; padding: 0.5em; color: #333; background: #f8f8ff; border: 1px solid #ccc; border-radius: 4px; }

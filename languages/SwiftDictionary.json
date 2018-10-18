@@ -143,5 +143,6 @@
                 "checked": "checked"
             }
         }
-    }
+    },
+    "exampleCode": "## Example\n\n\n#### Decoding:\nThe example below shows how to decode an instance of `<!RootClassName>` type from JSON object.\n\n```swift\nlet json = \"\"\"\n<!JsonString>\n\"\"\".data(using: .utf8)!\n\ndo { \n\tif let dict = try JSONSerialization.jsonObject(with: json, options: .allowFragments) as? [String: Any] {\n\t\tlet model = <!RootClassName>(dict) \n\t}\n} catch { \n\t// Handle error \n}\n```\n\n\n#### Encoding: \nThe example below shows how to encode an instance of a simple `<!RootClassName>` type into a JSON object.\n>Make sure to check `toDictionary()` method.\n```swift\nlet model = <!RootClassName>()\n// Assign value to properties.\n\nlet dict = model.toDictionary()\ndo {\n\tlet data = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)\n\tprint(String(data: data, encoding: .utf8)!)\n} catch {\n\t// Handle Error\n}\n```"
 }
