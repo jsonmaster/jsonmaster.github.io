@@ -94,13 +94,20 @@ var selectedLanguage = languages.swift;
 var selectedFramework = selectedLanguage.frameworks.codable;
 var inputTextArea;
 
-var htmlwriter;
-var reader;
+var md;
 
 $(document).ready(function() {
 
-  htmlwriter = new window.commonmark.HtmlRenderer();
-  reader = new window.commonmark.Parser();
+  md = window.markdownit({
+    highlight: function (str, lang) { 
+      if (lang && window.hljs.getLanguage(lang)) {
+        try {
+          return window.hljs.highlight(lang, str).value;
+        } catch (__) {}
+      }
+      return ''; 
+    }
+  });
 
 	inputTextArea = CodeMirror.fromTextArea(document.getElementById('input'), {
     mode: {name: "javascript", json: true},
@@ -280,8 +287,7 @@ function showExampleCode(language) {
 
     let input = inputTextArea.getValue();
     let codeText = language.exampleCode.replaceAll("<!RootClassName>", className).replaceAll("<!JsonString>", input);
-    var parsed = reader.parse(codeText);
-    var result = htmlwriter.render(parsed);
+    let result = md.render(codeText);
     $('#exampleCode').html(result);
   } else {
     $('#exampleCode').html("");
