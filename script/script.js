@@ -1,3 +1,5 @@
+"use strict";
+
 let languages = {
   swift: {
     name: "Swift",
@@ -86,14 +88,19 @@ let languages = {
       }
     }
   }
-}
+};
 
-var selectedLanguage = languages.swift
-var selectedFramework = selectedLanguage.frameworks.codable
+var selectedLanguage = languages.swift;
+var selectedFramework = selectedLanguage.frameworks.codable;
 var inputTextArea;
-// var outputTextArea;
+
+var htmlwriter;
+var reader;
 
 $(document).ready(function() {
+
+  htmlwriter = new window.commonmark.HtmlRenderer();
+  reader = new window.commonmark.Parser();
 
 	inputTextArea = CodeMirror.fromTextArea(document.getElementById('input'), {
     mode: {name: "javascript", json: true},
@@ -259,6 +266,24 @@ function updateUIForCurrentFramework(language) {
   });
 
   buildClasses(language);
+  showExampleCode(language);
+}
+
+function showExampleCode(language) {
+
+  if (language.exampleCode) {
+    var className = $('#rootClassName').val();
+
+    if (!className) {
+      className = "RootClass";
+    }
+
+    let input = inputTextArea.getValue();
+    let codeText = language.exampleCode.replaceAll("<!RootClassName>", className).replaceAll("<!JsonString>", input);
+    var parsed = reader.parse(codeText);
+    var result = htmlwriter.render(parsed);
+    $('#exampleCode').html(result);
+  }  
 }
 
 function checkBox(checkid, checkvalue, checkclass, checkchecked) {
