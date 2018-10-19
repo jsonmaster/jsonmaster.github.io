@@ -99,5 +99,6 @@
     "staticImports": "using System;\nusing System.Collections.Generic;\n\nusing Newtonsoft.Json;\nusing Newtonsoft.Json.Converters;",
     "supportsCamelcasing": true,
     "methods": {
-    }
+    },
+    "exampleCode": "## Example\n\n\n#### Decoding:\nThe example below shows how to decode an instance of `<!RootClassName>` type from JSON object.\n\n```csharp\nstring json = \"...\"; // Your JSON String.\n\n<!RootClassName> model = JsonConvert.DeserializeObject<<!RootClassName>>(json);\n```\n\n\n#### Encoding: \nThe example below shows how to encode an instance of a simple `<!RootClassName>` type into a JSON object.\n\n```java\n<!RootClassName> model = new <!RootClassName>();\n// Assign value to variables.\n\nstring json = JsonConvert.SerializeObject(model);\n```"
 }
