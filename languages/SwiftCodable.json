@@ -129,5 +129,6 @@
                 "checked": "checked"
             }
         }
-    }
+    },
+    "exampleCode": "## Example\n\n\n#### Decoding:\nThe example below shows how to decode an instance of `<!RootClassName>` type from JSON object.\n\n```swift\nlet json = \"\"\"\n<!JsonString>\n\"\"\".data(using: .utf8)!\n\nlet decoder = JSONDecoder()\nlet model = try decoder.decode(<!RootClassName>.self, json)\n```\n\n\n#### Encoding: \nThe example below shows how to encode an instance of a simple `<!RootClassName>` type into a JSON object.\n\n```swift\nlet model = <!RootClassName>()\n// Assign value to properties.\n\nlet encoder = JSONEncoder()\nencoder.outputFormatting = .prettyPrinted\n\nlet data = try encoder.encode(model)\nprint(String(data: data, encoding: .utf8)!)\n```"
 }

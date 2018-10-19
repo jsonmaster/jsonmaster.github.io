@@ -1,3 +1,5 @@
+"use strict";
+
 let languages = {
   swift: {
     name: "Swift",
@@ -86,14 +88,26 @@ let languages = {
       }
     }
   }
-}
+};
 
-var selectedLanguage = languages.swift
-var selectedFramework = selectedLanguage.frameworks.codable
+var selectedLanguage = languages.swift;
+var selectedFramework = selectedLanguage.frameworks.codable;
 var inputTextArea;
-// var outputTextArea;
+
+var md;
 
 $(document).ready(function() {
+
+  md = window.markdownit({
+    highlight: function (str, lang) { 
+      if (lang && window.hljs.getLanguage(lang)) {
+        try {
+          return window.hljs.highlight(lang, str).value;
+        } catch (__) {}
+      }
+      return ''; 
+    }
+  });
 
 	inputTextArea = CodeMirror.fromTextArea(document.getElementById('input'), {
     mode: {name: "javascript", json: true},
@@ -259,6 +273,25 @@ function updateUIForCurrentFramework(language) {
   });
 
   buildClasses(language);
+  showExampleCode(language);
+}
+
+function showExampleCode(language) {
+
+  if (language.exampleCode) {
+    var className = $('#rootClassName').val();
+
+    if (!className) {
+      className = "RootClass";
+    }
+
+    let input = inputTextArea.getValue();
+    let codeText = language.exampleCode.replaceAll("<!RootClassName>", className).replaceAll("<!JsonString>", input);
+    let result = md.render(codeText);
+    $('#exampleCode').html(result);
+  } else {
+    $('#exampleCode').html("");
+  }
 }
 
 function checkBox(checkid, checkvalue, checkclass, checkchecked) {

@@ -99,5 +99,6 @@
     "staticImports": "using System;\nusing System.Collections.Generic;",
     "supportsCamelcasing": false,
     "methods": {
-    }
+    },
+    "exampleCode": "## Example\n\n\n#### Decoding:\nThe example below shows how to decode an instance of `<!RootClassName>` type from JSON object.\n\n```csharp\nstring json = \"...\"; // Your JSON String.\n\n// minimum supported version: Win 8\nJsonObject root = Windows.Data.Json.JsonValue.Parse(jsonString).GetObject();\nConsole.WriteLine(root[\"Name\"].GetString()); // Here `Name` is key in JSON with string value.\nConsole.WriteLine(root[\"Address\"].GetObject()[\"State\"].GetString()); // Here `Address` is object which have `State` key with string value.\n```\n\n"
 }

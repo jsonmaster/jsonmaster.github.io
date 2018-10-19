@@ -133,5 +133,6 @@
         }],
         "others": {
         }
-    }
+    },
+    "exampleCode": "## Example\n\nThe example below shows how to decode an instance of `<!RootClassName>` type from JSON object.\n\n```swift\nlet json = \"\"\"\n<!JsonString>\n\"\"\".data(using: .utf8)!\n\nlet jsonObject = JSON(json)\nlet model = <!RootClassName>(jsonObject)\n```\n"
 }
