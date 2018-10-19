@@ -107,12 +107,12 @@
             },
             "jsonObject": {
                 "name": "toJSONObject",
-                "signature": "\tpublic JSONObject toJsonObject() ",
+                "signature": "\tpublic JSONObject toJSONObject() ",
                 "bodyStart": "{\n\t\tJSONObject jsonObject = new JSONObject();\n\t\ttry {\n",                     
                 "bodyEnd": "\t\t} catch (JSONException e) {\n\t\t\t// TODO Auto-generated catch block.\n\t\t\tprintStackTrace();\n\t\t}\n\t\treturn jsonObject;\n\t}\n",
                 "codeForEachProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>);\n",
-                "codeForEachCustomProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>.toJsonObject());\n",
-                "codeForEachCustomArrayProperty": "\t\t\tif (<!VarName!> != null && <!VarName!>.length > 0) {\n\t\t\t\tJSONArray <!VarName!>JsonArray = new JSONArray();\n\t\t\t\tfor (<!ElementType!> <!VarName!>Element : <!VarName!>) {\n\t\t\t\t\t<!VarName!>JsonArray.put(<!VarName!>Element.toJsonObject());\n\t\t\t\t}\n\t\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>JsonArray);\n\t\t\t}\n",
+                "codeForEachCustomProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>.toJSONObject());\n",
+                "codeForEachCustomArrayProperty": "\t\t\tif (<!VarName!> != null && <!VarName!>.length > 0) {\n\t\t\t\tJSONArray <!VarName!>JsonArray = new JSONArray();\n\t\t\t\tfor (<!ElementType!> <!VarName!>Element : <!VarName!>) {\n\t\t\t\t\t<!VarName!>JsonArray.put(<!VarName!>Element.toJSONObject());\n\t\t\t\t}\n\t\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>JsonArray);\n\t\t\t}\n",
                 "comment": "",
                 "checked": ""
             },
@@ -125,8 +125,8 @@
                 "bodyEndWithDependency": "\t\treturn jsonObject.toString();\n\t}\n",
                 "bodyEnd": "\t\t} catch (JSONException e) {\n\t\t\t// TODO Auto-generated catch block.\n\t\t\tprintStackTrace();\n\t\t}\n\t\treturn jsonObject.toString();\n\t}\n",
                 "codeForEachProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>);\n",
-                "codeForEachCustomProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>.toJsonObject());\n",
-                "codeForEachCustomArrayProperty": "\t\t\tif (<!VarName!> != null && <!VarName!>.length > 0) {\n\t\t\t\tJSONArray <!VarName!>JsonArray = new JSONArray();\n\t\t\t\tfor (<!ElementType!> <!VarName!>Element : <!VarName!>) {\n\t\t\t\t\t<!VarName!>JsonArray.put(<!VarName!>Element.toJsonObject());\n\t\t\t\t}\n\t\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>JsonArray);\n\t\t\t}\n",
+                "codeForEachCustomProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>.toJSONObject());\n",
+                "codeForEachCustomArrayProperty": "\t\t\tif (<!VarName!> != null && <!VarName!>.length > 0) {\n\t\t\t\tJSONArray <!VarName!>JsonArray = new JSONArray();\n\t\t\t\tfor (<!ElementType!> <!VarName!>Element : <!VarName!>) {\n\t\t\t\t\t<!VarName!>JsonArray.put(<!VarName!>Element.toJSONObject());\n\t\t\t\t}\n\t\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>JsonArray);\n\t\t\t}\n",
                 "comment": "",
                 "checked": ""
             }
