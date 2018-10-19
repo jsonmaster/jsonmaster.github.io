@@ -131,5 +131,6 @@
                 "checked": "checked"
             }
         }
-    }
+    },
+    "exampleCode": "## Example\n\n\n#### Decoding:\nThe example below shows how to decode an instance of `<!RootClassName>` type from JSON object.\n\n```java\nString json = \"...\"; // Your JSON String.\n\nJSONObject jsonObj = new JSONObject(json);\n\n<!RootClassName> model = new <!RootClassName>(jsonObj);\n```\n\n\n#### Encoding: \nThe example below shows how to encode an instance of a simple `<!RootClassName>` type into a JSON object.\n> To use this remeber to check the `toJSONObject()` method.\n\n```java\n<!RootClassName> model = new <!RootClassName>();\n// Assign value to variables.\n\nJSONObject jsonObject = model.toJSONObject();\nSystem.out.println(jsonObject.toString());\n```\n\n###### Or\nIf you checked `toString()` method you can directly use: \n```java\nSystem.out.println(model.toString());\n```"
 }
