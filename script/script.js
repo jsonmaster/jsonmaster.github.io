@@ -56,6 +56,11 @@ let languages = {
         name: "Gson",
         file: "JavaGson.json"
       },
+      moshi: {
+        mode: "text/x-java",
+        name: "Moshi",
+        file: "JavaMoshi.json"
+      },
       android: {
         mode: "text/x-java",
         name: "Android/JSONObject",
@@ -67,9 +72,14 @@ let languages = {
     name: "Kotlin",
     frameworks: {
       gson: {
-        mode: "text/x-java",
+        mode: "text/x-kotlin",
         name: "Gson",
         file: "KotlinGson.json"
+      },
+      moshi: {
+        mode: "text/x-kotlin",
+        name: "Moshi",
+        file: "KotlinMoshi.json"
       }
     }
   },

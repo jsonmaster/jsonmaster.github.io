@@ -1,0 +1,136 @@
+{
+    "modelStart": "{\n",
+    "reservedKeywords": [
+        "abstract",
+        "continue",
+        "for",
+        "new",
+        "null",
+        "switch",
+        "assert",
+        "default",
+        "if",
+        "package",
+        "synchronized",
+        "boolean",
+        "do",
+        "goto",
+        "private",
+        "this",
+        "break",
+        "double",
+        "implements",
+        "protected",
+        "throw",
+        "byte",
+        "else",
+        "import",
+        "public",
+        "throws",
+        "case",
+        "enum",
+        "instanceof",
+        "return",
+        "transient",
+        "catch",
+        "extends",
+        "int",
+        "short",
+        "try",
+        "char",
+        "final",
+        "interface",
+        "static",
+        "void",
+        "class",
+        "finally",
+        "long",
+        "strictfp",
+        "volatile",
+        "const",
+        "float",
+        "native",
+        "super",
+        "while"
+    ],
+
+    "dataTypes": {
+        "arrayType": "<!ElementType!>[]",
+        "generic": "Object",
+        "string": "String",
+        "boolean": "boolean",
+        "float": "double",
+        "doubleType": "double",
+        "characterType": "char",
+        "longType": "long",
+        "int": "int"
+    },
+
+    "typesWithCustomFetchMethod": [
+        "String",
+        "Object"
+    ],
+
+    "customFetchTypeReplacement": [
+        "",
+        ""
+    ],
+
+    "modelDefinition": "\npublic class <!ModelName!> ",
+    "fileExtension": "java",
+    "instanceVarDefinition": "\t@Json(\"<!JsonKeyName!>\")\n\tprivate <!VarType!> <!VarName!>;\n",
+    "modelEnd": "\n}",
+    "staticImports": "\nimport org.json.*;\nimport java.util.*;\nimport com.squareup.moshi.Json;",
+    "supportsCamelcasing": true,
+    "methods": {
+        "constructorName": "Constructor",
+        "constructorChecked": "",
+        "constructors": [{
+            "signature": "\tpublic <!ModelName!>(JSONObject jsonObject) ",
+            "bodyStart": "{\n\t\tif (jsonObject == null) {\n\t\t\treturn;\n\t\t}\n",
+            "bodyEnd": "\t}\n",
+            "codeForEachProperty": "\t\t<!VarName!> = jsonObject.opt<!CapitalizedVarType!>(\"<!JsonKeyName!>\");\n",
+            "codeForEachArrayProperty": "\t\tJSONArray <!VarName!>Tmp = jsonObject.optJSONArray(\"<!JsonKeyName!>\");\n\t\tif (<!VarName!>Tmp != null) {\n\t\t\t<!VarName!> = new <!ElementType!>[<!VarName!>Tmp.length()];\n\t\t\tfor (int i = 0; i < <!VarName!>Tmp.length(); i++) {\n\t\t\t\t<!VarName!>[i] = <!VarName!>Tmp.get(i);\n\t\t\t}\n\t\t}\n",
+            "codeForEachCustomProperty": "\t\t<!VarName!> = new <!VarType!>(jsonObject.optJSONObject(\"<!JsonKeyName!>\"));\n",
+            "codeForEachCustomArrayProperty": "\t\tJSONArray <!VarName!>JsonArray = jsonObject.optJSONArray(\"<!JsonKeyName!>\");\n\t\tif (<!VarName!>JsonArray != null) {\n\t\t\tArrayList<<!ElementType!>> <!VarName!>ArrayList = new ArrayList<>();\n\t\t\tfor (int i = 0; i < <!VarName!>JsonArray.length(); i++) {\n\t\t\t\tJSONObject <!VarName!>Object = <!VarName!>JsonArray.optJSONObject(i);\n\t\t\t\t<!VarName!>ArrayList.add(new <!ElementType!>(<!VarName!>Object));\n\t\t\t}\n\t\t\t<!VarName!> = (<!ElementType!>[]) <!VarName!>ArrayList.toArray();\n\t\t}\n",
+            "comment": ""
+        }],
+        "others": {
+            "getterSetter": {
+                "name": "Getter Setter",
+                "signature": "",
+                "bodyStart": "",                     
+                "bodyEnd": "",
+                "codeForEachProperty": "\tpublic void set<!CapitalizedVarName!>(<!VarType!> <!VarName!>) {\n\t\tthis.<!VarName!> = <!VarName!>;\n\t}\n\tpublic <!VarType!> get<!CapitalizedVarName!>() {\n\t\treturn this.<!VarName!>;\n\t}\n",
+                "comment": "",
+                "checked": "checked"
+            },
+            "jsonObject": {
+                "name": "toJSONObject",
+                "signature": "\tpublic JSONObject toJSONObject() ",
+                "bodyStart": "{\n\t\tJSONObject jsonObject = new JSONObject();\n\t\ttry {\n",                     
+                "bodyEnd": "\t\t} catch (JSONException e) {\n\t\t\t// TODO Auto-generated catch block.\n\t\t\tprintStackTrace();\n\t\t}\n\t\treturn jsonObject;\n\t}\n",
+                "codeForEachProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>);\n",
+                "codeForEachCustomProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>.toJSONObject());\n",
+                "codeForEachCustomArrayProperty": "\t\t\tif (<!VarName!> != null && <!VarName!>.length > 0) {\n\t\t\t\tJSONArray <!VarName!>JsonArray = new JSONArray();\n\t\t\t\tfor (<!ElementType!> <!VarName!>Element : <!VarName!>) {\n\t\t\t\t\t<!VarName!>JsonArray.put(<!VarName!>Element.toJSONObject());\n\t\t\t\t}\n\t\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>JsonArray);\n\t\t\t}\n",
+                "comment": "",
+                "checked": ""
+            },
+            "toString": {
+                "name": "toString",
+                "dependency": "jsonObject",
+                "signature": "\tpublic String toString() ",
+                "bodyStartWithDependency": "{\n\t\tJSONObject jsonObject = this.toJSONObject();\n",
+                "bodyStart": "{\n\t\tJSONObject jsonObject = new JSONObject();\n\t\ttry {\n",
+                "bodyEndWithDependency": "\t\treturn jsonObject.toString();\n\t}\n",
+                "bodyEnd": "\t\t} catch (JSONException e) {\n\t\t\t// TODO Auto-generated catch block.\n\t\t\tprintStackTrace();\n\t\t}\n\t\treturn jsonObject.toString();\n\t}\n",
+                "codeForEachProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>);\n",
+                "codeForEachCustomProperty": "\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>.toJSONObject());\n",
+                "codeForEachCustomArrayProperty": "\t\t\tif (<!VarName!> != null && <!VarName!>.length > 0) {\n\t\t\t\tJSONArray <!VarName!>JsonArray = new JSONArray();\n\t\t\t\tfor (<!ElementType!> <!VarName!>Element : <!VarName!>) {\n\t\t\t\t\t<!VarName!>JsonArray.put(<!VarName!>Element.toJSONObject());\n\t\t\t\t}\n\t\t\t\tjsonObject.put(\"<!JsonKeyName!>\", <!VarName!>JsonArray);\n\t\t\t}\n",
+                "comment": "",
+                "checked": ""
+            }
+        }
+    },
+    "exampleCode": "## Example\n\n\n#### Decoding:\nThe example below shows how to decode an instance of `<!RootClassName>` type from JSON object.\n\n```java\nString json = \"...\"; // Your JSON String.\n\nMoshi moshi = new Moshi.Builder().build();\nJsonAdapter<<!RootClassName>> adapter = moshi.adapter(<!RootClassName>.class);\n<!RootClassName> model = adapter.fromJson(json);\n```\n\n\n#### Encoding: \nThe example below shows how to encode an instance of a simple `<!RootClassName>` type into a JSON object.\n\n```java\n<!RootClassName> model = new <!RootClassName>();\n// Assign value to variables.\n\nMoshi moshi = new Moshi.Builder().build();\nJsonAdapter<<!RootClassName>> adapter = moshi.adapter(<!RootClassName>.class);\nSystem.out.println(adapter.toJson(model));\n```"
+}
