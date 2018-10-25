@@ -117,7 +117,7 @@
     "fileExtension": "kt",
     "codeForEachProperty": "\n\t\t@Json(\"<!JsonKeyName!>\") val <!VarName!>: <!VarType!>",
     "modelEnd": "",
-    "staticImports": "\nimport com.squareup.moshi.Json",
+    "staticImports": "\nimport com.squareup.moshi.Json\nimport com.squareup.moshi.Moshi\nimport com.squareup.moshi.JsonAdapter\nimport com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory",
     "supportsCamelcasing": true,
     "methods": {
         "others": {
