@@ -117,7 +117,7 @@
     "fileExtension": "kt",
     "codeForEachProperty": "\n\t\t@SerializedName(\"<!JsonKeyName!>\") val <!VarName!>: <!VarType!>",
     "modelEnd": "}",
-    "staticImports": "\nimport com.google.gson.annotations.SerializedName",
+    "staticImports": "\nimport com.google.gson.annotations.SerializedName\nimport com.google.gson.Gson\nimport com.google.gson.GsonBuilder",
     "supportsCamelcasing": true,
     "methods": {
         "others": {

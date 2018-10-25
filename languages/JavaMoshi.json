@@ -80,7 +80,7 @@
     "fileExtension": "java",
     "instanceVarDefinition": "\t@Json(\"<!JsonKeyName!>\")\n\tprivate <!VarType!> <!VarName!>;\n",
     "modelEnd": "\n}",
-    "staticImports": "\nimport java.util.*;\nimport com.squareup.moshi.Json;",
+    "staticImports": "\nimport java.util.*;\nimport com.squareup.moshi.Json;\nimport com.squareup.moshi.Moshi;\nimport com.squareup.moshi.JsonAdapter;",
     "supportsCamelcasing": true,
     "methods": {
         "constructorName": "Constructor",
