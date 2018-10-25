@@ -120,6 +120,26 @@
     "staticImports": "\nimport com.squareup.moshi.Json",
     "supportsCamelcasing": true,
     "methods": {
+        "others": {
+            "construction": {
+                "name": "Create Utility",
+                "signature": "\tcompanion object { \n\t\tfun create(json: String): <!ModelName!> ",
+                "bodyStart": "{\n\t\t\tval moshi = Moshi.Builder()\n\t\t\t\t.add(KotlinJsonAdapterFactory())\n\t\t\t\t.build()\n\t\t\tval adapter = moshi.adapter(<!ModelName!>::class.java)\n",
+                "bodyEnd": "\t\t\treturn adapter.fromJson(json)\n\t\t}\n\t}\n",
+                "codeForEachProperty": "",
+                "comment": "",
+                "checked": "checked"
+            },
+            "toString": {
+                "name": "toString",
+                "signature": "\tfun toString(): String ",
+                "bodyStart": "{\n\t\tval moshi = Moshi.Builder()\n\t\t\t\t.add(KotlinJsonAdapterFactory())\n\t\t\t\t.build()\n\t\tval adapter = moshi.adapter(<!ModelName!>::class.java)\n",
+                "bodyEnd": "\t\treturn adapter.toJson(this)\n\t}\n",
+                "codeForEachProperty": "",
+                "comment": "",
+                "checked": "checked"
+            }
+        }
     },
     "exampleCode": "## Example\n\n\n#### Decoding:\nThe example below shows how to decode an instance of `<!RootClassName>` type from JSON object.\n\n```kotlin\nval json = \"...\" // Your JSON String.\n\nval moshi = Moshi.Builder()\n\t.add(KotlinJsonAdapterFactory())\n\t.build()\nval adapter = moshi.adapter(<!RootClassName>::class.java)\nval model = adapter.fromJson(json)\n```\n\n\n#### Encoding: \nThe example below shows how to encode an instance of a simple `<!RootClassName>` type into a JSON object.\n\n```kotlin\nval model = <!RootClassName>()\n// Assign value to variables.\n\nval moshi = Moshi.Builder()\n\t.add(KotlinJsonAdapterFactory())\n\t.build()\nval adapter = moshi.adapter(<!RootClassName>::class.java)\nprintln(adapter.toJson(model))\n```"
 }

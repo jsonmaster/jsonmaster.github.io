@@ -1,5 +1,5 @@
 {
-    "modelStart": "",
+    "modelStart": "{",
     "reservedKeywords": [
         "field",
         "dynamic",
@@ -116,10 +116,30 @@
     "modelDefinition": "\ndata class <!ModelName!> (<!ModelDefinitionProperty!>\n) ",
     "fileExtension": "kt",
     "codeForEachProperty": "\n\t\t@SerializedName(\"<!JsonKeyName!>\") val <!VarName!>: <!VarType!>",
-    "modelEnd": "",
+    "modelEnd": "}",
     "staticImports": "\nimport com.google.gson.annotations.SerializedName",
     "supportsCamelcasing": true,
     "methods": {
+        "others": {
+            "construction": {
+                "name": "Create Utility",
+                "signature": "\tcompanion object { \n\t\tfun create(json: String): <!ModelName!> ",
+                "bodyStart": "{\n\t\t\tval gson = GsonBuilder().create()\n",
+                "bodyEnd": "\t\t\treturn gson.fromJson(json, object: <!ModelName!>::class.java)\n\t\t}\n\t}\n",
+                "codeForEachProperty": "",
+                "comment": "",
+                "checked": "checked"
+            },
+            "toString": {
+                "name": "toString",
+                "signature": "\tfun toString(): String ",
+                "bodyStart": "{\n\t\tval gson = GsonBuilder().create()\n",
+                "bodyEnd": "\t\treturn gson.toJson(this)\n\t}\n",
+                "codeForEachProperty": "",
+                "comment": "",
+                "checked": "checked"
+            }
+        }
     },
     "exampleCode": "## Example\n\n\n#### Decoding:\nThe example below shows how to decode an instance of `<!RootClassName>` type from JSON object.\n\n```kotlin\nval json = \"...\" // Your JSON String.\n\nval builder = GsonBuilder()\nval gson = builder.create()\nval model: <!RootClassName> = gson.fromJson(json, object: <!RootClassName>::class.java)\n```\n\n\n#### Encoding: \nThe example below shows how to encode an instance of a simple `<!RootClassName>` type into a JSON object.\n\n```kotlin\nval model = <!RootClassName>()\n// Assign value to variables.\n\nval builder = GsonBuilder()\nval gson = builder.create()\nprintln(gson.toJson(model))\n```"
 }

@@ -135,8 +135,6 @@ $(document).ready(function() {
   });
 
   inputTextArea.setSize(null, $("#input").innerHeight());
-    // outputTextArea.setSize(null, $("#input").innerHeight());
-
     Object.keys(languages).forEach(function(key) {
      let value = languages[key];
      let element = $('<a class="dropdown-item dropdown-item-language" id="' + key + '" href="#">' + value.name + '</a>');
