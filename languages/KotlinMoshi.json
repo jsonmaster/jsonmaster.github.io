@@ -1,5 +1,5 @@
 {
-    "modelStart": "",
+    "modelStart": "{",
     "reservedKeywords": [
         "field",
         "dynamic",
@@ -116,7 +116,7 @@
     "modelDefinition": "\ndata class <!ModelName!> (<!ModelDefinitionProperty!>\n) ",
     "fileExtension": "kt",
     "codeForEachProperty": "\n\t\t@Json(\"<!JsonKeyName!>\") val <!VarName!>: <!VarType!>",
-    "modelEnd": "",
+    "modelEnd": "}",
     "staticImports": "\nimport com.squareup.moshi.Json\nimport com.squareup.moshi.Moshi\nimport com.squareup.moshi.JsonAdapter\nimport com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory",
     "supportsCamelcasing": true,
     "methods": {
