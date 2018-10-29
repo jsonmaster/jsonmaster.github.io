@@ -116,7 +116,8 @@
             "bodyStart": "{\n\t\tlet values = try decoder.container(keyedBy: CodingKeys.self)\n",                     
             "bodyEnd": "\t}\n",
             "codeForEachProperty": "\t\t<!VarName!> = try values.decodeIfPresent(<!VarType!>.self, forKey: .<!VarName!>)\n",
-            "codeForUndefinedProperty": "\t\t<!VarName!> = nil // TODO: Add code for decoding <!VarName!>, It was null at the time of model creation.\n",
+            "codeForUndefinedProperty": "\t\t<!VarName!> = nil // TODO: Add code for decoding `<!VarName!>`, It was null at the time of model creation.\n",
+            "codeForUndefinedArrayProperty": "\t\t<!VarName!> = [] // TODO: Add code for decoding `<!VarName!>`, It was empty at the time of model creation.\n",
             "comment": ""
         }],
         "others": {
@@ -126,7 +127,8 @@
                 "bodyStart": "{\n\t\tvar container = encoder.container(keyedBy: CodingKeys.self)\n",                     
                 "bodyEnd": "\t}\n",
                 "codeForEachProperty": "\t\ttry container.encodeIfPresent(<!VarName!>, forKey: .<!VarName!>)\n",
-                "codeForUndefinedProperty": "\t\t// TODO: Add code for encoding <!VarName!>, It was null at the time of model creation.\n",
+                "codeForUndefinedProperty": "\t\t// TODO: Add code for encoding `<!VarName!>`, It was null at the time of model creation.\n",
+                "codeForUndefinedArrayProperty": "\t\t// TODO: Add code for encoding `<!VarName!>`, It was empty at the time of model creation.\n",
                 "comment": "",
                 "checked": "checked"
             }

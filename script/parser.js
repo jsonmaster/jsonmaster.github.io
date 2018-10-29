@@ -333,10 +333,10 @@ FileRepresenter.prototype = {
 				}
 			}
 
-			if (property.propertyType == language.dataTypes.generic || property.elementType == language.dataTypes.generic) {
-				if (method.codeForUndefinedProperty) {
-					propertyString = method.codeForUndefinedProperty
-				}
+			if (property.propertyType == language.dataTypes.generic && method.codeForUndefinedProperty) {
+				propertyString = method.codeForUndefinedProperty
+			} else if (property.elementType == language.dataTypes.generic && method.codeForUndefinedArrayProperty) {
+				propertyString = method.codeForUndefinedArrayProperty
 			}
 
 			propertyString = propertyString.replaceAll(varName, property.propertyName);
