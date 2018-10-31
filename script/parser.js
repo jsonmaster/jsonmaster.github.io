@@ -333,6 +333,12 @@ FileRepresenter.prototype = {
 				}
 			}
 
+			if (property.propertyType == language.dataTypes.generic && method.codeForUndefinedProperty) {
+				propertyString = method.codeForUndefinedProperty
+			} else if (property.elementType == language.dataTypes.generic && method.codeForUndefinedArrayProperty) {
+				propertyString = method.codeForUndefinedArrayProperty
+			}
+
 			propertyString = propertyString.replaceAll(varName, property.propertyName);
 			propertyString = propertyString.replaceAll(jsonKeyName, property.jsonKeyName);
 			propertyString = propertyString.replaceAll(varType, property.propertyType);
@@ -407,10 +413,13 @@ FileRepresenter.prototype = {
 		content = content + this.addModelDefinition();
 		content = content + this.language.modelStart;
 
-		content = content + this.addProperties();
-		content = content + this.addSetterGetter();
-		content = content + this.addInitializers();
-		content = content + this.addUtilitiesMethods();
+		if (this.properties.length > 0) {
+			content = content + this.addProperties();
+			content = content + this.addSetterGetter();
+			content = content + this.addInitializers();
+			content = content + this.addUtilitiesMethods();
+		}
+
 		content = content + this.language.modelEnd;
 		content = content.replaceAll(modelName, this.className);
 
