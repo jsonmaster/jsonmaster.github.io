@@ -114,7 +114,7 @@
     "getter": "",
     "setter": "",
     "fileExtension": "swift",
-    "instanceVarDefinition": "\tlet <!VarName!>: <!VarType!>?\n",
+    "instanceVarDefinition": "\t<!VarNameKey!> <!VarName!>: <!VarType!>?\n",
     "modelEnd": "\n}",
     "staticImports": "import Foundation",
     "supportsCamelcasing": true,

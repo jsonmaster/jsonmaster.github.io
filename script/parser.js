@@ -13,7 +13,7 @@ let constKeyName = "<!ConstKeyName!>"
 let additionalCustomTypeProperty = "<!AdditionalForCustomTypeProperty!>"
 let modelIdentifier = "<!ModelIdentifier!>"
 let modelDefinitionProperties = "<!ModelDefinitionProperty!>"
-
+let varNameKey = "<!VarNameKey!>"
 
 // FileBuilder
 function FileBuilder(language) {
@@ -59,7 +59,7 @@ FileBuilder.prototype.getFiles = function(fileName, object, language) {
 	var _this = this;
 	keys.forEach(function(key) {
 		var value = obj[key];
-		var property = getProperty(key, value, language);
+		var property = getProperty(key, value, language, _this.varTypes);
 
 		var prevIndex = properties.map(function(prop) {
 			return prop.propertyName;
@@ -82,12 +82,13 @@ FileBuilder.prototype.getFiles = function(fileName, object, language) {
 	file.isInitializers = this.isInitializers;
 	file.modelIdentifier = this.modelIdentifier;
 	file.methods = this.methods;
+	file.varTypes = this.varTypes;
 
 	files.splice(0, 0, file);
 	return files;
 }
 
-function getProperty(key, value, language) {
+function getProperty(key, value, language, varTypes) {
 	let propertyName = getLanguageName(key, language);
 	let valueType = getPropertyTypeName(value, language);
 
@@ -95,6 +96,7 @@ function getProperty(key, value, language) {
 	property.jsonKeyName = key;
 	property.propertyName = propertyName;
 	property.sampleValue = value;
+	property.varTypes = varTypes
 
 	if (value instanceof Array) {
 		if (value[0] && (value[0] instanceof Object)) {
@@ -225,6 +227,7 @@ Property.prototype = {
 	toString: function() {
 		var content = this.language.instanceVarDefinition;
 
+		content = content.replaceAll(varNameKey, this.varTypes);
 		content = content.replaceAll(varType, this.propertyType);
 		content = content.replaceAll(varName, this.propertyName);
 		content = content.replaceAll(jsonKeyName, this.jsonKeyName);
@@ -393,8 +396,13 @@ FileRepresenter.prototype = {
 
 		if (this.language.codeForEachProperty) {
 			var _language = this.language;
+			var _this = this;
 			let propertyList = this.properties.map(function (property) { 
-				return _language.codeForEachProperty.replaceAll(varName, property.propertyName).replaceAll(jsonKeyName, property.jsonKeyName).replaceAll(varType, property.propertyType);
+				return _language.codeForEachProperty
+					.replaceAll(varNameKey, _this.varTypes)
+					.replaceAll(varName, property.propertyName)
+					.replaceAll(jsonKeyName, property.jsonKeyName)
+					.replaceAll(varType, property.propertyType);
 			}).join(",");
 
 			modelDefinition = modelDefinition.replaceAll(modelDefinitionProperties, propertyList);
@@ -426,8 +434,6 @@ FileRepresenter.prototype = {
 		return content;
 	}
 }
-
-
 
 Date.prototype.dateString = function() {
 

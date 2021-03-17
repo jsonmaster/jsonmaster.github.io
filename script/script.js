@@ -16,6 +16,15 @@ let languages = {
           key: "class",
           value: "Class",
           checked: ""
+        }],
+        varTypes: [{
+          key: "let",
+          value: "let",
+          checked: "checked"
+        },{
+          key: "var",
+          value: "var",
+          checked: ""
         }]
       },
       swiftyjson: {
@@ -30,6 +39,15 @@ let languages = {
           key: "class",
           value: "Class",
           checked: ""
+        }],
+        varTypes: [{
+          key: "let",
+          value: "let",
+          checked: "checked"
+        },{
+          key: "var",
+          value: "var",
+          checked: ""
         }]
       },
       dictionary: {
@@ -43,6 +61,15 @@ let languages = {
         },{
           key: "class",
           value: "Class",
+          checked: ""
+        }],
+        varTypes: [{
+          key: "let",
+          value: "let",
+          checked: "checked"
+        },{
+          key: "var",
+          value: "var",
           checked: ""
         }]
       }
@@ -74,12 +101,30 @@ let languages = {
       gson: {
         mode: "text/x-kotlin",
         name: "Gson",
-        file: "KotlinGson.json"
+        file: "KotlinGson.json",
+        varTypes: [{
+          key: "val",
+          value: "val",
+          checked: "checked"
+        },{
+          key: "var",
+          value: "var",
+          checked: ""
+        }]
       },
       moshi: {
         mode: "text/x-kotlin",
         name: "Moshi",
-        file: "KotlinMoshi.json"
+        file: "KotlinMoshi.json",
+        varTypes: [{
+          key: "val",
+          value: "val",
+          checked: "checked"
+        },{
+          key: "var",
+          value: "var",
+          checked: ""
+        }]
       }
     }
   },
@@ -175,6 +220,7 @@ function getAllClasses(language) {
   builder.isInitializers = $('#initializerCheckbox').is(':checked');
   builder.rootClassName = $('#rootClassName').val();
   builder.modelIdentifier = $('[name="modelIdentifierRadios"]:checked').val();
+  builder.varTypes = $('[name="modelVariableRadios"]:checked').val();
 
   var methods = new Array();
   let checkedMethods = $('.method-checkbox:checked');
@@ -244,6 +290,15 @@ function updateSelectedFramework() {
     selectedFramework.identifiers.forEach(function(identifier){
       let element = '<div class="form-check"><input class="form-check-input model-identifier-radio" type="radio" name="modelIdentifierRadios" id="' + identifier.key + '" value="' + identifier.key + '" ' + identifier.checked + '><label class="form-check-label" for="' + identifier.key + '">' + identifier.value + '</label></div>';
       $("#modelIdentifiers").append(element);
+    });
+  }
+
+  $("#modelVariableTypes").empty();
+  if (selectedFramework.varTypes) {
+    $("#modelVariableTypes").append('<label>Variable Type:</label>');
+    selectedFramework.varTypes.forEach(function(identifier){
+      let element = '<div class="form-check"><input class="form-check-input model-identifier-radio" type="radio" name="modelVariableRadios" id="' + identifier.key + '" value="' + identifier.key + '" ' + identifier.checked + '><label class="form-check-label" for="' + identifier.key + '">' + identifier.value + '</label></div>';
+      $("#modelVariableTypes").append(element);
     });
   }
 

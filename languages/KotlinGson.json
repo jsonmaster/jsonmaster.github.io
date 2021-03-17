@@ -115,7 +115,7 @@
 
     "modelDefinition": "\ndata class <!ModelName!> (<!ModelDefinitionProperty!>\n) ",
     "fileExtension": "kt",
-    "codeForEachProperty": "\n\t\t@SerializedName(\"<!JsonKeyName!>\") val <!VarName!>: <!VarType!>",
+    "codeForEachProperty": "\n\t\t@SerializedName(\"<!JsonKeyName!>\")\n\t\t<!VarNameKey!> <!VarName!>: <!VarType!>",
     "modelEnd": "}",
     "staticImports": "\nimport com.google.gson.annotations.SerializedName\nimport com.google.gson.Gson\nimport com.google.gson.GsonBuilder",
     "supportsCamelcasing": true,
