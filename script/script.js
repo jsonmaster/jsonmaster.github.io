@@ -140,9 +140,19 @@ let languages = {
         mode: "text/x-csharp",
         name: "C# Class",
         file: "CSharpClass.json"
+        }
+    }
+  },
+  xpp: {
+      name: "X++",
+      frameworks: {
+          xppClass: {
+              mode: "text/x-csharp",
+              name: "X++ Contract Class",
+              file: "xppJSON.json"
+          }
       }
     }
-  }
 };
 
 var selectedLanguage = languages.swift;
