@@ -1,5 +1,5 @@
 {
-  "modelStart": "\n{\n",
+  "modelStart": "\n{",
   "reservedKeywords": [
     "abstract",
     "as",
@@ -97,7 +97,7 @@
   "instanceVarDefinition": "\n\tprivate <!VarType!> <!VarName!>;",
   "modelEnd": "\n}",
   "staticImports": "",
-  "supportsCamelcasing": true,
+  "supportsCamelcasing": false,
   "methods": {
     "others": {
       "getterSetter": {
@@ -105,11 +105,11 @@
         "signature": "",
         "bodyStart": "",
         "bodyEnd": "",
-        "codeForEachProperty": "\n\t[DataMember]\n\tpublic void <!CapitalizedVarName!>(<!VarType!> _<!VarName!> = <!VarName!>) {\n\t\t<!VarName!> = _<!VarName!>;\n\t\treturn <!VarName!>;\n\t}\n",
-        "comment": "",
+        "codeForEachProperty": "\n\t[DataMember]\n\tpublic <!VarType!> <!CapitalizedVarName!>(<!VarType!> _<!VarName!> = <!VarName!>)\n\t{\n\t\t<!VarName!> = _<!VarName!>;\n\t\treturn <!VarName!>;\n\t}\n",
+        "codeForEachArrayProperty": "\n\t[DataMember,\n\t AifCollectionTypeAttribute(\"_<!VarName!>\",Types::Class), classstr(putClassName),\n\t AifCollectionTypeAttribute(\"_return\",Types::Class), classstr(putClassName)]\n\tpublic <!VarType!> <!CapitalizedVarName!>(<!VarType!> _<!VarName!> = <!VarName!>)\n\t{\n\t\t<!VarName!> = _<!VarName!>;\n\t\treturn <!VarName!>;\n\t}",
         "checked": "checked"
       }
     }
   },
-  "exampleCode": ""
+  "exampleCode": "## Example\n\n\n#### Decoding:\nThe example below shows how to decode an instance of `<!RootClassName>` type from JSON object.\n\n```csharp\nstring json = \"...\"; // Your JSON String.\n\n<!RootClassName> model = JsonConvert.DeserializeObject<<!RootClassName>>(json);\n```\n\n\n#### Encoding: \nThe example below shows how to encode an instance of a simple `<!RootClassName>` type into a JSON object.\n\n```java\n<!RootClassName> model = new <!RootClassName>();\n// Assign value to variables.\n\nstring json = JsonConvert.SerializeObject(model);\n```"
 }
