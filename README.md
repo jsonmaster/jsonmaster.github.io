@@ -24,5 +24,3 @@ Visit: https://jsonmaster.github.io
     - C# Class
     
 4. **[X++](https://docs.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/dev-ref/xpp-language-reference)**
-    - [Newtonsoft](https://www.newtonsoft.com/json/help/html/SerializingJSON.htm)
-    - C# Class
