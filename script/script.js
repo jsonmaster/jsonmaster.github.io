@@ -150,6 +150,11 @@ let languages = {
               mode: "text/x-csharp",
               name: "X++ Contract Class",
               file: "xppJSON.json"
+          },
+		  xppParmClass: {
+              mode: "text/x-csharp",
+              name: "X++ Parm Contract Class",
+              file: "xppParmJSON.json"
           }
       }
     }

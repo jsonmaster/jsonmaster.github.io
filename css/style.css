@@ -10,7 +10,7 @@
   line-height: inherit;
 }
 
-.form-control {
+.form-control[class = 'form-control mr-sm-2']{
     display: block;
     width: 100%;
     height: calc(2.25rem + 2px);
