@@ -10,4 +10,19 @@
   line-height: inherit;
 }
 
+.form-control[class = 'form-control mr-sm-2']{
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff0;
+    background-clip: padding-box;
+    border: 1px solid #ced4da00;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
 pre {-moz-tab-size: 4; tab-size: 4; display: block; padding: 0.5em; color: #333; background: #f8f8ff; border: 1px solid #ccc; border-radius: 4px; }
