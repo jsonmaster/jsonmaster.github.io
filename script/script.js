@@ -25,6 +25,15 @@ let languages = {
           key: "var",
           value: "var",
           checked: ""
+        }],
+        optionalTypes: [{
+          key: "optional",
+          value: "Optional",
+          checked: ""
+        },{ 
+          key: "non-optional",
+          value: "Non Optional",
+          checked: "checked"
         }]
       },
       swiftyjson: {
@@ -110,6 +119,15 @@ let languages = {
           key: "var",
           value: "var",
           checked: ""
+        }],
+        optionalTypes: [{
+          key: "optional",
+          value: "Optional",
+          checked: ""
+        },{ 
+          key: "non-optional",
+          value: "Non Optional",
+          checked: "checked"
         }]
       },
       moshi: {
@@ -124,6 +142,15 @@ let languages = {
           key: "var",
           value: "var",
           checked: ""
+        }],
+        optionalTypes: [{
+          key: "optional",
+          value: "Optional",
+          checked: ""
+        },{ 
+          key: "non-optional",
+          value: "Non Optional",
+          checked: "checked"
         }]
       }
     }
@@ -236,6 +263,7 @@ function getAllClasses(language) {
   builder.rootClassName = $('#rootClassName').val();
   builder.modelIdentifier = $('[name="modelIdentifierRadios"]:checked').val();
   builder.varTypes = $('[name="modelVariableRadios"]:checked').val();
+  builder.isOptional = $('[name="modelOptionalRadios"]:checked').val() == "optional";
 
   var methods = new Array();
   let checkedMethods = $('.method-checkbox:checked');
@@ -314,6 +342,15 @@ function updateSelectedFramework() {
     selectedFramework.varTypes.forEach(function(identifier){
       let element = '<div class="form-check"><input class="form-check-input model-identifier-radio" type="radio" name="modelVariableRadios" id="' + identifier.key + '" value="' + identifier.key + '" ' + identifier.checked + '><label class="form-check-label" for="' + identifier.key + '">' + identifier.value + '</label></div>';
       $("#modelVariableTypes").append(element);
+    });
+  }
+
+  $("#optionalTypes").empty();
+  if (selectedFramework.optionalTypes) {
+    $("#optionalTypes").append('<label>Optional:</label>');
+    selectedFramework.optionalTypes.forEach(function(identifier){
+      let element = '<div class="form-check"><input class="form-check-input model-identifier-radio" type="radio" name="modelOptionalRadios" id="' + identifier.key + '" value="' + identifier.key + '" ' + identifier.checked + '><label class="form-check-label" for="' + identifier.key + '">' + identifier.value + '</label></div>';
+      $("#optionalTypes").append(element);
     });
   }
 

@@ -116,6 +116,7 @@
     "modelDefinition": "\ndata class <!ModelName!> (<!ModelDefinitionProperty!>\n) ",
     "fileExtension": "kt",
     "codeForEachProperty": "\n\t\t@Json(\"<!JsonKeyName!>\")\n\t\t<!VarNameKey!> <!VarName!>: <!VarType!>",
+    "codeForEachPropertyOptional": "\n\t\t@Json(\"<!JsonKeyName!>\")\n\t\t<!VarNameKey!> <!VarName!>: <!VarType!>?",
     "modelEnd": "}",
     "staticImports": "\nimport com.squareup.moshi.Json\nimport com.squareup.moshi.Moshi\nimport com.squareup.moshi.JsonAdapter\nimport com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory",
     "supportsCamelcasing": true,

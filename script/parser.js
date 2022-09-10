@@ -60,6 +60,7 @@ FileBuilder.prototype.getFiles = function(fileName, object, language) {
 	keys.forEach(function(key) {
 		var value = obj[key];
 		var property = getProperty(key, value, language, _this.varTypes);
+		property.isOptional = _this.isOptional
 
 		var prevIndex = properties.map(function(prop) {
 			return prop.propertyName;
@@ -226,6 +227,9 @@ Property.prototype = {
 	constructor: Property,
 	toString: function() {
 		var content = this.language.instanceVarDefinition;
+		if (this.isOptional) {
+			content = this.language.instanceVarDefinitionOptional;
+		}
 
 		content = content.replaceAll(varNameKey, this.varTypes);
 		content = content.replaceAll(varType, this.propertyType);
@@ -323,6 +327,9 @@ FileRepresenter.prototype = {
 			}
 
 			var propertyString = method.codeForEachProperty;
+			if (property.isOptional && method.codeForEachPropertyOptional) {
+				propertyString = method.codeForEachPropertyOptional;
+			}
 
 			if (property.isCustomClass) {
 				if (method.codeForEachCustomProperty) {
@@ -393,12 +400,15 @@ FileRepresenter.prototype = {
 
 		var modelDefinition = this.language.modelDefinition.replaceAll(modelName, this.className).replaceAll(modelIdentifier, this.modelIdentifier);
 		
+		var codeForEachProperty = this.language.codeForEachProperty
+		if (this.language.isOptional && this.language.codeForEachPropertyOptional) {
+			codeForEachProperty = this.language.codeForEachPropertyOptional
+		}
 
-		if (this.language.codeForEachProperty) {
-			var _language = this.language;
+		if (codeForEachProperty) {
 			var _this = this;
 			let propertyList = this.properties.map(function (property) { 
-				return _language.codeForEachProperty
+				return codeForEachProperty
 					.replaceAll(varNameKey, _this.varTypes)
 					.replaceAll(varName, property.propertyName)
 					.replaceAll(jsonKeyName, property.jsonKeyName)

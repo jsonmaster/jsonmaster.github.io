@@ -99,38 +99,41 @@
     "setter": "",
     "fileExtension": "swift",
     "instanceVarDefinition": "\t<!VarNameKey!> <!VarName!>: <!VarType!>\n",
+    "instanceVarDefinitionOptional": "\t<!VarNameKey!> <!VarName!>: <!VarType!>?\n",
     "modelEnd": "\n}",
     "staticImports": "import Foundation",
     "supportsCamelcasing": true,
     "methods": {
-        "constructorName": "Initializer",
-        "constructorChecked": "checked",
-        "constructors": [{
-            "signature": "\tprivate enum CodingKeys: String, CodingKey ",
-            "bodyStart": "{\n",
-            "bodyEnd": "\t}\n",
-            "codeForEachProperty": "\t\tcase <!VarName!> = \"<!JsonKeyName!>\"\n",
-            "comment": ""
-        },{            
-            "signature": "\tinit(from decoder: Decoder) throws ",
-            "bodyStart": "{\n\t\tlet values = try decoder.container(keyedBy: CodingKeys.self)\n",                     
-            "bodyEnd": "\t}\n",
-            "codeForEachProperty": "\t\t<!VarName!> = try values.decode(<!VarType!>.self, forKey: .<!VarName!>)\n",
-            "codeForUndefinedProperty": "\t\t<!VarName!> = nil // TODO: Add code for decoding `<!VarName!>`, It was null at the time of model creation.\n",
-            "codeForUndefinedArrayProperty": "\t\t<!VarName!> = [] // TODO: Add code for decoding `<!VarName!>`, It was empty at the time of model creation.\n",
-            "comment": ""
-        }],
         "others": {
+            "condingKeys": {
+                "name": "CodingKeys",
+                "signature": "\tprivate enum CodingKeys: String, CodingKey ",
+                "bodyStart": "{\n",
+                "bodyEnd": "\t}\n",
+                "codeForEachProperty": "\t\tcase <!VarName!> = \"<!JsonKeyName!>\"\n",
+                "comment": ""
+            },
+            "initializer": {
+                "name": "Initializer",
+                "signature": "\tinit(from decoder: Decoder) throws ",
+                "bodyStart": "{\n\t\tlet values = try decoder.container(keyedBy: CodingKeys.self)\n",                     
+                "bodyEnd": "\t}\n",
+                "codeForEachProperty": "\t\t<!VarName!> = try values.decode(<!VarType!>.self, forKey: .<!VarName!>)\n",
+                "codeForEachPropertyOptional": "\t\t<!VarName!> = try values.decodeIfPresent(<!VarType!>.self, forKey: .<!VarName!>)\n",
+                "codeForUndefinedProperty": "\t\t<!VarName!>? = nil // TODO: Add code for decoding `<!VarName!>`, It was null at the time of model creation.\n",
+                "codeForUndefinedArrayProperty": "\t\t<!VarName!> = [] // TODO: Add code for decoding `<!VarName!>`, It was empty at the time of model creation.\n",
+                "comment": ""
+            },
             "encoder": {
                 "name": "Encoding",
                 "signature": "\tfunc encode(to encoder: Encoder) throws ",
                 "bodyStart": "{\n\t\tvar container = encoder.container(keyedBy: CodingKeys.self)\n",                     
                 "bodyEnd": "\t}\n",
                 "codeForEachProperty": "\t\ttry container.encode(<!VarName!>, forKey: .<!VarName!>)\n",
+                "codeForEachPropertyOptional": "\t\ttry container.encodeIfPresent(<!VarName!>, forKey: .<!VarName!>)\n",
                 "codeForUndefinedProperty": "\t\t// TODO: Add code for encoding `<!VarName!>`, It was null at the time of model creation.\n",
                 "codeForUndefinedArrayProperty": "\t\t// TODO: Add code for encoding `<!VarName!>`, It was empty at the time of model creation.\n",
-                "comment": "",
-                "checked": "checked"
+                "comment": ""
             }
         }
     },
